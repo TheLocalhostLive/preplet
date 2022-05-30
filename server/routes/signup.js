@@ -2,6 +2,8 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const User = require('../models/user');
+const checkSpecialChar = require('../utils/customValidation')
+const checkNumeric = require('../utils/customValidation')
 const UserToken = require('../models/otp')
 const nodemailer = require('nodemailer');
 const { registerValidation } = require('../registrationValidation');
@@ -29,11 +31,23 @@ router.get('/register', (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    // validating the User's data
-    const { error } = registerValidation(req.body)
-    if (error) return res.status(400).send('Bhai yeh Kya kar tuu...' + error.details[0].message);
+    
+    //Name is required
+    if(!req.body.name) return res.status(400).json({message:'Bhai yeh kar raha hain ? .. Name is required', error:null})
+    // validating name 
+    const isSpecialChar = checkSpecialChar(req.body.name)
+   if(!isSpecialChar) return res.status(400).json({message:'Special Characters are not allowed in name',error:true})
 
-    //check if the user is already in database or not
+   const isNumeric = checkNumeric(req.body.name)
+   if(isNumeric) return res.status(400).json({message:'Numeric Characters are not allowed in Name', error:true})
+   
+    const { error } = registerValidation(req.body ,res)
+    if (error) return res.status(400).json({message:'Bhai yeh Kya kar tuu...' + error.details[0].message,error:true});
+   
+   
+
+    // User exists or not
+    
     const emailExsit = await User.findOne({ email: req.body.email });
     if (emailExsit) return res.status(400).json({ message: 'Yeh kaisa dognlapanti? email already exists', error: true })
 
@@ -57,9 +71,6 @@ router.post('/', async (req, res) => {
             oneTimeKey : crypto.randomBytes(64).toString('hex')
         })
         const savedToken = await userToken.save();
-        console.log(userToken)
-        // res.json(savedUser);
-        //  res.redirect('/login');
         const payload = {
             id: user._id ,
             tokenId : userToken._id,
@@ -74,9 +85,8 @@ router.post('/', async (req, res) => {
             subject: "Verify your email",
             html: `<h1> Raha nhi jata ... Tadap hi Aisi hain! </h1>
                     <h2> Verify Your Email First </h2> 
-                 <a href = "http://localhost:3000/verify-email?token=${onetime_key}"> Click to verify</a>
+                 <a href = "http://localhost:3005/verify-email?token=${onetime_key}"> Click to verify</a>
                     `
-             // <a href = "http://localhost:3000/verify-email?token=${user.emailToken}"> Click to verify</a>
         }
 
 
@@ -89,7 +99,7 @@ router.post('/', async (req, res) => {
                 console.log("Mail has been sent to email account")
             }
         })
-
+        res.json({message:'Check Your email and Verify',error:false});
 
     } catch (error) {
         res.status(404).send(error);

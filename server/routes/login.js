@@ -21,17 +21,17 @@ router.post('/',async(req,res)=>{
    
     // validating the User's Data
     const {error} = loginValidation(req.body);
-    if(error) return res.status(400).send('Bhai yeh Kya kar tuu...'+error.details[0].message);
+    if(error) return res.status(400).json({message:'Bhai yeh Kya kar tuu...'+error.details[0].message ,error:true});
 
     // Checking whether user id exists or not
     const validUser = await User.findOne({ email : req.body.email});
-    if(validUser===null) return res.status(400).send('Yeh Shab Doglapan hain! .... Wrong Username or Password!');
+    if(validUser===null) return res.status(400).json({message:'Yeh Shab Doglapan hain! .... Wrong Username or Password!',error:true});
     
 
     if(validUser. isVerified ){
     // Checking whether password is correct or not 
     const validPassword = await bcrypt.compare(req.body.password, validUser.password);
-    if(!validPassword) return res.status(400).send('Nalla hain kya ?... Wrong Password')
+    if(!validPassword) return res.status(400).json({message:'Nalla hain kya ?... Wrong Password',error:true})
         
     //creating payload
     const payload = {
@@ -41,7 +41,7 @@ router.post('/',async(req,res)=>{
     //Creating a Token
     const token = jwt.sign(payload , process.env.ACCESS_TOKEN_SECRET);
     // Storing token in cookie
-    res.cookie('auth-token',token).send('Reh Bhai Bhai ! Logged in');
+    res.cookie('auth-token',token).json({message:'Reh Bhai Bhai ! Logged in',error:false});
     // res.header('auth-token', token).send(token) -- Store in header if needed
 
     // res.send('Reh Bhai Bhai ! Logged in');
