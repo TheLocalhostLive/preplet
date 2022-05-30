@@ -9,9 +9,9 @@ const {loginValidation} = require('../loginValidation');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const createToken = (id)=>{
-    return jwt.sign(id , process.env.ACCESS_TOKEN_SECRET);
-}
+// const createToken = (id)=>{
+//     return jwt.sign(id , process.env.ACCESS_TOKEN_SECRET);
+// }
 
 router.get('/',(req,res)=>{
     res.send("LOGIN");
@@ -25,19 +25,21 @@ router.post('/',async(req,res)=>{
 
     // Checking whether user id exists or not
     const validUser = await User.findOne({ email : req.body.email});
-    // console.log(validUser);
-    if(!validUser) return res.status(400).send('Yeh Shab Doglapan hain! .... Wrong Username or Password!');
+    if(validUser===null) return res.status(400).send('Yeh Shab Doglapan hain! .... Wrong Username or Password!');
     
 
     if(validUser. isVerified ){
     // Checking whether password is correct or not 
     const validPassword = await bcrypt.compare(req.body.password, validUser.password);
     if(!validPassword) return res.status(400).send('Nalla hain kya ?... Wrong Password')
-
+        
+    //creating payload
+    const payload = {
+        id: validUser._id,
+        isAdmin : validUser.admin
+    }
     //Creating a Token
-    // const token = jwt.sign({_id: validUser._id} , process.env.ACCESS_TOKEN_SECRET);
-
-    const token = createToken({_id: validUser._id});
+    const token = jwt.sign(payload , process.env.ACCESS_TOKEN_SECRET);
     // Storing token in cookie
     res.cookie('auth-token',token).send('Reh Bhai Bhai ! Logged in');
     // res.header('auth-token', token).send(token) -- Store in header if needed

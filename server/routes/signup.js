@@ -2,9 +2,11 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const User = require('../models/user');
+const UserToken = require('../models/otp')
 const nodemailer = require('nodemailer');
 const { registerValidation } = require('../registrationValidation');
-const { TLSSocket } = require('tls');
+// const { TLSSocket } = require('tls');
+const jwt = require('jsonwebtoken');
 
 
 require('dotenv').config();
@@ -45,22 +47,36 @@ router.post('/', async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword,
-            emailToken: crypto.randomBytes(64).toString('hex'),
+            // emailToken: crypto.randomBytes(64).toString('hex'),
 
         });
-        // Finally Adding The user in Data Base "hurray"
         const savedUser = await user.save();
+        // Finally Adding The user in Data Base "hurray"
+        const userToken = new UserToken({
+            userId : savedUser._id,
+            oneTimeKey : crypto.randomBytes(64).toString('hex')
+        })
+        const savedToken = await userToken.save();
+        console.log(userToken)
         // res.json(savedUser);
         //  res.redirect('/login');
+        const payload = {
+            id: user._id ,
+            tokenId : userToken._id,
+            oneTimeKey : userToken.oneTimeKey
+        }
+        const onetime_key = jwt.sign(payload , process.env.ACCESS_TOKEN_SECRET ,{expiresIn: '15m'})
+
         // Sending Activation Link to user's Gmail
         let mailingDetails = {
             from: '"Team Xlet"<tonmaysardar500@gmail.com>',
             to: user.email,
             subject: "Verify your email",
-            html: `<h1> Raha nhi jata ... Tadap hi Aishi hain! </h1>
+            html: `<h1> Raha nhi jata ... Tadap hi Aisi hain! </h1>
                     <h2> Verify Your Email First </h2> 
-                    <a href = "http://localhost:3000/verify-email?token=${user.emailToken}"> Click to verify</a>
+                 <a href = "http://localhost:3000/verify-email?token=${onetime_key}"> Click to verify</a>
                     `
+             // <a href = "http://localhost:3000/verify-email?token=${user.emailToken}"> Click to verify</a>
         }
 
 
@@ -80,5 +96,4 @@ router.post('/', async (req, res) => {
     }
 
 })
-
 module.exports = router;

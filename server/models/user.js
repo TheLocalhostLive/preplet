@@ -21,9 +21,9 @@ const userSchema = new mongoose.Schema({
         min : 8 ,
         max : 1024
     },
-    emailToken : {
-        type: String
-    },
+    // emailToken : {
+    //     type: String
+    // },
     isVerified : {
         type: Boolean,
         default: false
@@ -31,15 +31,11 @@ const userSchema = new mongoose.Schema({
     date :{
         type: Date ,
         default : Date.now
+    },
+    admin :{
+        type:Boolean ,
+        default:false
     }
-    // active: {
-    //     type:boolean ,
-    //     default:false
-    // },
-    // admin :{
-    //     type:boolean ,
-    //     default:false
-    // }
 })
 
 module.exports = mongoose.model('User',userSchema)

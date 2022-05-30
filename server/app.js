@@ -1,12 +1,9 @@
 const express = require('express') 
 const app = express()
 const mongoose = require('mongoose')
-const hbs = require('hbs')
 const cookieparser = require('cookie-parser')
-
 const dotenv = require('dotenv')
 dotenv.config();
-
 
 mongoose.connect(process.env.DB_CONNECT,{useNewUrlParser:true})
 const connect = mongoose.connection 
@@ -18,11 +15,7 @@ app.use(cookieparser())
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 
-
-
-
-let PORT = process.env.PORT ||3000 
-
+let PORT = process.env.PORT ||3003
 
 //Importing Auth-Routes
 
@@ -41,8 +34,12 @@ app.use('/verify-email',verifyEmail);
 const emailVerifiedPage = require('./routes/emailVerifiedPage');
 app.use('/email-verfied', emailVerifiedPage);
 
-// const forgotPassword = require('./routes/forgetpasword');
-// app.use('/forget-password',forgotPassword);
+
+const forgotPassword = require('./routes/forgetpasword');
+app.use('/forget-password',forgotPassword);
+
+const upatedPassowrd = require('./routes/updatedPassword');
+app.use('/updated-password',upatedPassowrd);
 
 
 app.listen(PORT,()=>{

@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
-
+const UserToken = require('../models/otp')
+const Jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const dotenv = require('dotenv');
+const Joi = require('joi')
 dotenv.config();
 
 let transporter = nodemailer.createTransport({
@@ -40,19 +43,34 @@ router.post('/',async(req,res)=>{
     // console.log(validUser);
     if(!validUser) return res.status(400).send('Excuse Me , That is a Wrong Email');
     
-
     if(validUser. isVerified ){
+        const userToken = UserToken.findOne({userId:validUser._id});
+        userToken.oneTimeKey = crypto.randomBytes(70).toString('hex');
+        // const userToken = new UserToken({
+        //     userId : validUser._id,
+        //     oneTimeKey : crypto.randomBytes(64).toString('hex')
+        // })
+
+        // validUser.emailToken = crypto.randomBytes(50).toString('utf8');
+
+        //creating a payload for craeating token 
+        const payload = {
+            id: validUser._id ,
+            tokenId : userToken._id,
+            oneTimeKey : userToken.oneTimeKey
+        }
+            // creating a token for oneTime access
+        const onetime_key = Jwt.sign(payload , process.env.ACCESS_TOKEN_SECRET , {expiresIn:'5m'});
 
         let mailingDetails = {
             from: '"Team Xlet"<tonmaysardar500@gmail.com>',
             to: validUser.email,
-            subject: "Verify your email",
-            html: `<h1> Here's the Passwor Reset Link! </h1>
-                    <a href = "http://localhost:3000/reset-password?token=${user.emailToken}">Reset Password</a>
+            subject: "Reset Your Password",
+            html: `<h1> Girl Friend ka number toh nhi Bhulta ! </h1>
+                    <h2> Here's the Password reset link </h2>
+                    <a href = "http://localhost:3000/reset-password?token=${onetime_key}">Reset Password</a>
                     `
         }
-
-
         // Sending Mail 
         transporter.sendMail(mailingDetails, function (error, info) {
             if (error) {
@@ -66,7 +84,5 @@ router.post('/',async(req,res)=>{
     } else {
         res.status(403).send('First Verify Your Account');
     }
-
-
 })
 module.exports = router;
