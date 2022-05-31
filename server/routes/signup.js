@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const User = require('../models/user');
 const checkSpecialChar = require('../utils/customValidation')
 const checkNumeric = require('../utils/customValidation')
+const checkAsterisk = require('../utils/customValidation')
 const UserToken = require('../models/otp')
 const nodemailer = require('nodemailer');
 const { registerValidation } = require('../registrationValidation');
@@ -32,19 +33,22 @@ router.get('/register', (req, res) => {
 
 router.post('/', async (req, res) => {
     
-    //Name is required
-    if(!req.body.name) return res.status(400).json({message:'Bhai yeh kar raha hain ? .. Name is required', error:null})
-    // validating name 
-    const isSpecialChar = checkSpecialChar(req.body.name)
-   if(!isSpecialChar) return res.status(400).json({message:'Special Characters are not allowed in name',error:true})
-
-   const isNumeric = checkNumeric(req.body.name)
-   if(isNumeric) return res.status(400).json({message:'Numeric Characters are not allowed in Name', error:true})
+    // validating User's details
+   
    
     const { error } = registerValidation(req.body ,res)
     if (error) return res.status(400).json({message:'Bhai yeh Kya kar tuu...' + error.details[0].message,error:true});
    
-   
+               //---- Custom Validation ---//
+    const isSpecialChar = checkSpecialChar(req.body.name)
+    console.log(isSpecialChar)
+    if(isSpecialChar) return res.status(400).json({message:'Special Characters are not allowed in name',error:true})
+ 
+    const isNumeric = checkNumeric(req.body.name)
+    if(isNumeric) return res.status(400).json({message:'Numeric Characters are not allowed in Name', error:true})
+
+    const isAsterisk = checkAsterisk(req.body.password)
+    if(isAsterisk) return res.status(400).json({message:'Asterisk is Not allowed in password',error:true})
 
     // User exists or not
     
