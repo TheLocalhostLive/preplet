@@ -39,7 +39,7 @@ router.get('/',async(req,res)=>{
         }
     } 
     catch (error) {
-        res.status(401).send('Link Expired')
+        res.status(401).json({message:'Link Expired', error:true});
         console.log(error);
     }
 })
