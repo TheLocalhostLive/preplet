@@ -1,19 +1,21 @@
 const passport = require('passport');
 const router = require('express').Router()
 const User = require('../models/user')
-const UserToken = require('../models/otp')
 const jwt = require('jsonwebtoken')
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-require('dotenv').config();
-const callback = require('./authGooleCallback');
-const { emitWarning } = require('process');
+const session = require('express-session');
+const { redirect } = require('express/lib/response');
 
-passport.serializeUser(function(user,done){
-  done(null , user)
+require('dotenv').config();
+
+passport.serializeUser((user,done)=>{
+  done(null , user.id)
 })
 
-passport.deserializeUser(function(user,done){
-  done(null , user)
+passport.deserializeUser((id,done)=>{
+  User.findById(id).then((user)=>{
+    done(null , user)
+  })
 })
 
 
@@ -25,22 +27,18 @@ passport.use(new GoogleStrategy({
   },
   async function(request, accessToken, refreshToken, profile, done) {
     console.log("Acessing Google Account")
-    // console.log(profile)
     let user = await User.findOne({googleId: profile.id})
         if (user) {
-          const payload = {
-            id:user._id,
-            isAdmin:user.isAdmin
-          }
-          const token = jwt.sign(payload , process.env.ACCESS_TOKEN_SECRET)
+          done(null ,user)
         }
-        else{
-         user = new User({
+        else{ 
+         const Savinguser = new User({
            googleId : profile.id,
-           name:profile.name,
+           name:profile.displayName,
            email:profile.email,
            isVerified:true
          })
+         user = await User.create(Savinguser)
         }
        return done(null, user);
   }

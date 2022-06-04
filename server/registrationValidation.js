@@ -11,7 +11,7 @@ const registerValidation = data => {
       .messages({
         "string.pattern.base":
           "Name must not contain number or special characters",
-        "any.custom": "Charater * is not allowed!",
+        "any.custom": "Charater * is not allowed in NAME!",
       }),
 
     email: Joi.string().min(6).required().email(),
@@ -25,10 +25,10 @@ const registerValidation = data => {
       requirementCount: 4,
     })
       .custom((value, helper) => {
-        if (value.includes("*")) throw new Error("Charater * is not allowed!");
+        if (value.includes("*")) throw new Error("Charater * is not allowed in PASSWORD!");
       })
       .messages({
-        "any.custom": "Charater * is not allowed!",
+        "any.custom": "Charater * is not allowed in PASSWORD!",
       }),
   });
   return schema.validate(data, { abortEarly: false });
