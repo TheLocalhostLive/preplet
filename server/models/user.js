@@ -2,9 +2,13 @@ const { boolean, required, string } = require('joi')
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
+    googleId :{
+        type: String,
+        default: null
+    },
     name : {
         type : String,
-        required : true ,
+        // required : true ,
         min : 6 ,
         max:15
     },
@@ -17,7 +21,7 @@ const userSchema = new mongoose.Schema({
     },
     password : {
         type: String ,
-        required : true ,
+        // required : true ,
         min : 8 ,
         max : 1024
     },

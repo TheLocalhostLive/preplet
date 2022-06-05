@@ -1,17 +1,22 @@
+
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+
 // const crypto = require('crypto');
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 // const cookie = require('cookie-parser');
 const { loginValidation } = require("../loginValidation");
 
+
 const dotenv = require("dotenv");
+
 dotenv.config();
 
 // const createToken = (id)=>{
 //     return jwt.sign(id , process.env.ACCESS_TOKEN_SECRET);
 // }
+
 
 router.get("/", (req, res) => {
   res.send("LOGIN");
@@ -45,6 +50,7 @@ router.post("/", async (req, res) => {
         .status(400)
         .json({ message: "Nalla hain kya ?... Wrong Password", error: true });
 
+
     //creating payload
     const payload = {
       id: validUser._id,
@@ -53,6 +59,7 @@ router.post("/", async (req, res) => {
     //Creating a Token
     const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
     // Storing token in cookie
+
     res
       .cookie("auth-token", token)
       .json({ message: "Reh Bhai Bhai ! Logged in", error: false });
@@ -75,5 +82,6 @@ router.get("/status", async (req, res) => {
     res.json({ loginStatus: false });
   }
 });
+
 
 module.exports = router;

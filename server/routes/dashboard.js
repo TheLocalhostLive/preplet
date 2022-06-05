@@ -3,7 +3,7 @@ const verify = require('../authenticateToken')
 
 
 
-router.get('/',verify, (req,res)=>{
+router.get('/', verify, (req,res)=>{
     res.send('Dashboard')
 })
 

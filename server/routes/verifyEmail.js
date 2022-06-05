@@ -10,15 +10,7 @@ router.get('/',async(req,res)=>{
         const token = req.query.token
         const oneTime = jwt.verify(token , process.env.ACCESS_TOKEN_SECRET)
         const user = await User.findOne({_id: oneTime.id})
-        // console.log(user)
         const onetimeUse = await UserToken.findOne({_id: oneTime.tokenId , userId:user._id})
-        // console.log(onetime_key)
-        // console.log(oneTime.emailToken)
-        // onetime_key.oneTimeKey = null 
-        // console.log(onetime_key.oneTime);
-        // console.log(onetime_key.oneTimeKey)
-        
-            //  User can Verify only time 
         if(!user.isVerified){
             try {    
                     
@@ -39,9 +31,10 @@ router.get('/',async(req,res)=>{
         }
     } 
     catch (error) {
-        res.status(401).json({message:'Link Expired', error:true});
         console.log(error);
-    }
+        res.status(401).send('Link Expired')
+        
+    } 
 })
 
 module.exports = router ; 
