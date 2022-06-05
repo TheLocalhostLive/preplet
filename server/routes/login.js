@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
+const checkAsterisk = require('../utils/customValidation')
 // const crypto = require('crypto');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
@@ -7,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const {loginValidation} = require('../loginValidation');
 
 const dotenv = require('dotenv');
+const { redirect } = require('express/lib/response');
 dotenv.config();
 
 // const createToken = (id)=>{
@@ -14,7 +16,7 @@ dotenv.config();
 // }
 
 router.get('/',(req,res)=>{
-    res.send("LOGIN");
+    res.send("Please LOGIN");
 })
 
 router.post('/',async(req,res)=>{
@@ -22,6 +24,9 @@ router.post('/',async(req,res)=>{
     // validating the User's Data
     const {error} = loginValidation(req.body);
     if(error) return res.status(400).json({message:'Bhai yeh Kya kar tuu...'+error.details[0].message ,error:true});
+
+    const isAsterisk = checkAsterisk(req.body.password);
+    if(isAsterisk) return res.status(400).json({message:'Asterisk is not allowed in Password', error:true})
 
     // Checking whether user id exists or not
     const validUser = await User.findOne({ email : req.body.email});
@@ -41,11 +46,7 @@ router.post('/',async(req,res)=>{
     //Creating a Token
     const token = jwt.sign(payload , process.env.ACCESS_TOKEN_SECRET);
     // Storing token in cookie
-    res.cookie('auth-token',token).json({message:'Reh Bhai Bhai ! Logged in',error:false});
-    // res.header('auth-token', token).send(token) -- Store in header if needed
-
-    // res.send('Reh Bhai Bhai ! Logged in');
-
+    res.cookie('auth-token',token).json({message:'Reh Bhai Bhai ! Logged in',isAdmin:validUser.admin});
     } else {
         res.status(403).send('First Verify Your Account');
     }
