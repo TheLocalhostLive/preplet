@@ -6,8 +6,8 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 const Home: NextPage = () => {
-  let { loginStatus, loading } = useContext(AuthContext);
-  if (loading) return <h4>Loading...</h4>;
+  let { loginStatus } = useContext(AuthContext);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Landing Page</h1>
+      <h1>DashBoard</h1>
       <p>User is {loginStatus ? "" : "Not"} Logged in</p>
     </div>
   );
