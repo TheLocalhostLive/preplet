@@ -46,6 +46,9 @@ app.use('/callback',callback)
 const routingForLogin = require('./routes/login'); 
 app.use('/login',routingForLogin);
 
+const accessToken = require('./routes/login')
+app.use('/login/get-new-access-token', accessToken);
+
 const routingForDashboard = require('./routes/dashboard');
 app.use('/dashboard',routingForDashboard);
 

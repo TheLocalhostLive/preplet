@@ -6,6 +6,11 @@ const otpSchema = new mongoose.Schema({
     },
     oneTimeKey : {
         type : String 
+    },
+    refreshToken : {
+        default:null,
+        type: String,
+        expires: 30*86400
     }
 })
 
