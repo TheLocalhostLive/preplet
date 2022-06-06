@@ -57,6 +57,10 @@ app.use("/updated-password", upatedPassowrd);
 const logOut = require("./routes/logout");
 app.use("/logout", logOut);
 
+//questionUpload
+const questionRouter = require('./routes/UploadQuestion')
+app.use('/question', questionRouter)
+
 app.listen(PORT, () => {
   console.log(`Server is Running ${PORT}`);
 });
