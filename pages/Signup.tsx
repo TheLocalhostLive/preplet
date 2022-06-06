@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,19 +17,22 @@ interface FormData {
 const Signup = () => {
   const [textOnBtn, setTextOnBtn] = useState("Register");
   const [inputType, setInputType] = useState("password");
+  const router = useRouter();
   const [inputTypeConfirmPass, setInputTypeConfirmPass] = useState("password");
   const handleShowHidePassword = () => {
     if (inputType === "text") setInputType("password");
     else setInputType("text");
   };
-
+  const handleGoogleSignup = async () => {
+    window.open(serverURL + "/google", "_parent");
+  };
   const handleShowHideConfirmPass = () => {
     if (inputTypeConfirmPass === "text") setInputTypeConfirmPass("password");
     else setInputTypeConfirmPass("text");
   };
 
   useEffect(() => {
-    if (loginStatus) Router.push("/");
+    if (loginStatus) router.push("/Dashboard");
   });
 
   let { loginStatus, serverURL } = useContext(AuthContext);
@@ -54,7 +57,7 @@ const Signup = () => {
       },
       body: JSON.stringify(formData),
     };
-    let result;
+
     try {
       const response = await toast.promise(
         fetch(`${serverURL}/register`, request),
@@ -65,9 +68,7 @@ const Signup = () => {
       );
       const { message } = await response.json();
       if (response.status === 200) {
-        toast.success("Account opened Successfully");
-        Router.push("/Login");
-        toast.success("Please Login to continue..");
+        toast.success("Please verify your email");
       } else if (response.status === 400) {
         toast.error(message);
       }
@@ -163,6 +164,8 @@ const Signup = () => {
                 </div>
               </form>
               {/* Links */}
+              <div>OR</div>
+              <button onClick={handleGoogleSignup}>Signup with Google</button>
               <div>
                 <p>
                   Already an User
