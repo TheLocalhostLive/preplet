@@ -11,15 +11,15 @@ router.get(
   "/",
   passport.authenticate("google", { failureRedirect: "/login" }),
   function (req, res) {
+    console.log(req.user.googleId);
     const payload = {
-      id: req.user._id,
-      isAdmin: req.user.admin,
+      googleId: req.user.googleId,
     };
     const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-
-    res
-      .cookie("auth-token", token)
-      .json({ message: "Reh Bhai Bhai ! Logged in", isAdmin: req.user.admin });
+    res.redirect("http://localhost:3000/Dashboard/?token=" + token);
+    // res
+    //   .cookie("auth-token", token)
+    //   .json({ message: "Reh Bhai Bhai ! Logged in", isAdmin: req.user.admin });
     console.log("call back");
   }
 );

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,17 +10,21 @@ import ToggleInputType from "../components/ToggleInputType";
 const Login = () => {
   const [textOnBtn, setTextOnBtn] = useState("Login");
   const [inputType, setInputType] = useState("password");
-
+  const router = useRouter();
   const handleShowHidePassword = () => {
     if (inputType === "text") setInputType("password");
     else setInputType("text");
   };
+  let { loginStatus, setLoginStatus, serverURL, setIsAdmin, isAdmin } =
+    useContext(AuthContext);
 
   useEffect(() => {
-    if (loginStatus) Router.push("/Dashboard");
+    if (loginStatus) {
+      if (isAdmin) router.push("/admin/Dashboard");
+      else router.push("/Dashboard");
+    }
   });
 
-  let { loginStatus, setLoginStatus, serverURL } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -30,6 +34,9 @@ const Login = () => {
     mode: "onTouched",
   });
   const password = watch("password");
+  const handleGoogleLogin = async () => {
+    window.open(serverURL + "/google", "_self");
+  };
   const onSubmit = async (formData: any) => {
     console.log(formData);
     setTextOnBtn("Submitting...");
@@ -51,11 +58,13 @@ const Login = () => {
           error: "Please Retry",
         }
       );
-      const { message } = await response.json();
+      const { message, isAdmin } = await response.json();
       if (response.status === 200) {
         setLoginStatus(true);
+        setIsAdmin(isAdmin);
         toast.success("Logged In successfully");
-        Router.push("/Dashboard");
+        if (isAdmin) router.push("/admin/Dashboard");
+        else router.push("/Dashboard");
       } else if (response.status === 400) {
         toast.error(message);
       }
@@ -114,6 +123,8 @@ const Login = () => {
                 </div>
               </form>
               {/* Links */}
+              <div>OR</div>
+              <button onClick={handleGoogleLogin}>Login with Google</button>
               <div>
                 <p>
                   Don&apos;t have an account?
