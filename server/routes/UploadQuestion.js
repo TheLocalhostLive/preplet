@@ -1,6 +1,5 @@
 //const { addListener } = require('../models/jeletQuesUp')
 const router = require('express').Router()
-const { schema } = require('../models/jeletChemQues')
 const chemQuesUp = require('../models/jeletChemQues')
 const feeeQuesUp = require('../models/jeletFeeeQues')
 const mathQuesUp = require('../models/jeletMathQues')

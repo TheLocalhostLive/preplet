@@ -7,7 +7,7 @@ const physQuesUp = require('../models/jeletPhysQues')
 router.post('/chem', async (req, res) => {
     try {
         let foundQues
-            foundQues = await chemQuesUp.find({year: req.body.year})
+            foundQues = await chemQuesUp.find({chapter: req.body.chapter})
         res.status(200).json({question: foundQues, error: false, messsage:"successful", count: foundQues.length})
     }
     catch (err) {
@@ -18,7 +18,7 @@ router.post('/chem', async (req, res) => {
 router.post('/math', async (req, res) => {
     try {
         let foundQues
-            foundQues = await mathQuesUp.find({year: req.body.year})
+            foundQues = await mathQuesUp.find({chapter: req.body.chapter})
             res.status(200).json({question: foundQues, error: false, messsage:"successful", count: foundQues.length})
         }
         catch (err) {
@@ -29,7 +29,7 @@ router.post('/math', async (req, res) => {
 router.post('/phys', async (req, res) => {
     try {
         let foundQues
-            foundQues = await physQuesUp.find({year: req.body.year})
+            foundQues = await physQuesUp.find({chapter: req.body.chapter})
             res.status(200).json({question: foundQues, error: false, messsage:"successful", count: foundQues.length})
         }
         catch (err) {
@@ -40,7 +40,7 @@ router.post('/phys', async (req, res) => {
 router.post('/feee', async (req, res) => {
     try {
         let foundQues
-            foundQues = await feeeQuesUp.find({year: req.body.year})
+            foundQues = await feeeQuesUp.find({chapter: req.body.chapter})
             res.status(200).json({question: foundQues, error: false, messsage:"successful", count: foundQues.length})
         }
         catch (err) {

@@ -61,6 +61,13 @@ app.use("/logout", logOut);
 const questionRouter = require('./routes/UploadQuestion')
 app.use('/question', questionRouter)
 
+const previousYearRouter = require('./routes/previousYearQues')
+app.use('/previousyearquestions', previousYearRouter)
+
+const chapterWiseRouter = require('./routes/chapterWiseQues')
+app.use('/chaterwisequestions', chapterWiseRouter)
+
+
 app.listen(PORT, () => {
   console.log(`Server is Running ${PORT}`);
 });
