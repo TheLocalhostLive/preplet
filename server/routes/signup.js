@@ -63,6 +63,7 @@ router.post("/", async (req, res) => {
     });
     const savedUser = await user.save();
     // Finally Adding The user in Data Base "hurray"
+    
     const userToken = new UserToken({
       userId: savedUser._id,
       oneTimeKey: crypto.randomBytes(64).toString("hex"),

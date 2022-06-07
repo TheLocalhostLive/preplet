@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "preplet",
+  "private_key_id": "57f987969b8fb2e2a659008beab2e3949a74e47c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC/ExL5ynn/piv8\nXNBUqGjYiI8lLEJ/FRo/CzRvhRi9vCa06GfnxBsP7fvPJVmdOLQBUSz1LgA8BOF5\nF1LoMKxa7tVsa8S6wxYSAScqbdBYmPdvgnIoIW5BUFrKYkzv1QRopA3NLgHBwjxR\nUJMvHO/j1mBHPaZLvFeoPX0QMwMKcYdhN6Qzr05nbz6xllnvkKi5Mqr4nNvM7SFo\nHsPctms8FzdTkXieZH2eTfBlvWIRaCKLTUdGiQkI/aadSdeJgBOIeU7zSrqCdAof\nPQdwKb0y2ygI2rAtTLwFV3o7V++WmfIFJ36ixSmlJ2tary/sX56NA6aLJXH0Jdgp\n+AhRyrhRAgMBAAECggEACJDwOTjjvIt8fhdCo0L8FVYU9c2MyyH8793em0/QHsR6\nR0LCksRK0s1gbEZgRMFLp6H2JiVKbyZoXduG9OAmv/pkYNSZiKZxnTvGP9uVuz0b\nXblPSR+Lj/vMYDWlPZzTEmZldIEHJOLCfcJDIPn3AsPEA/medJeEZgdgrZrd3GhL\n8800asjQG+UKID6yd0drDDmjJaR6gBE14r+oSe6niDlkpy2WhUBUE39nTA9Wrk5x\nqJ2OVaglAoLIf4ULCNQ2o4MZrAsCrSUAEMi14vDPE+MMsYJI5pNy5dPBDaT1T/s0\nRSg502NN7Rytn3mLb9X3+qy9yWtFCyhdOQ/P5SFOQQKBgQDqzQYJcu7VWeAiiQFV\nwVewFTIbdraZreOx4SYuEcR/kO7R/sjTIHkvG+ndzvMvAmZPxqgQOavyiHgeESfm\n63BQ+pJ0vcB26fxmxlQSPD03uFac3uZllXY+ejQ4VNKvCcjtcslQVRUnW8kBz2OI\nMjprelZjwmnGeork8Pk7uuCZ4QKBgQDQU2YMgKtPOSIQg0G2UhvMM9loFtaCBwOa\nHaM0eJ9jsL2bP3AHRu5naT6io/pwFLFApTHCvsvuM5p/lElcmBJPtSp13bJeVMM0\nlG29lu460AOmIvP7wJLTNlMoKYto1NQLpvxHzQzJTLmg02+Pg+o04RonytoadrSQ\n4XKvtfhMcQKBgGYHXT4x4TJ4cXrQSfI3p6DuNO3WMhaphy2+hlayhc5g7kX2DtIf\nZEliOceWq/mbc1XrHxCd3ufvATMfhVVErXOizo1H/yAtIO6P8+xQnNFfmtNj0H4H\n6m/Prm1j/oDtIZB8tpnfvudxbPEKa1e9a8FUUcHbsxb6HOzLAaJA3GRBAoGBAMMd\naVXKaShhJWN7297sFjbyVOwlf7D26su8eHAbjYUsMtml18IpD/7w1oYzuMqixsT6\nM5nnY07tLAXTl8ZOc9ANqQANrRKmptGnNwU7yFJzIwfGcudWnO2PUuEpz/VWaGel\ndWG2TgR3hOB5R2KONZxjPEEKv63LgiCz1tt1PmIxAoGBAKq+tFzG0RyITRqhYG5M\n0Bk/PMvyVM4LexAhAwbbN6g2iRkVYkX34RZ8iV/QeCAUS+73d4hAa49oRDPQBoJl\nTszvw7gm76qX6QKyRlqoNhGvDmZRZyfUOBT4NocoC0ls5mplsaHbOAP3spVd7kCW\nuNrh72Ekvy3l9qy4kW0oUaIl\n-----END PRIVATE KEY-----\n",
+  "client_email": "preplet@preplet.iam.gserviceaccount.com",
+  "client_id": "106111400343988757926",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/preplet%40preplet.iam.gserviceaccount.com"
+}
