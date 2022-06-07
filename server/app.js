@@ -65,7 +65,7 @@ const previousYearRouter = require('./routes/previousYearQues')
 app.use('/previousyearquestions', previousYearRouter)
 
 const chapterWiseRouter = require('./routes/chapterWiseQues')
-app.use('/chaterwisequestions', chapterWiseRouter)
+app.use('/chapterwisequestions', chapterWiseRouter)
 
 
 app.listen(PORT, () => {
