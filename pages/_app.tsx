@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/index.css";
 import type { AppProps } from "next/app";
 import AuthContextProvider from "../context/AuthContext";
 import { useRouter } from "next/router";
