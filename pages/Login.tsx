@@ -84,7 +84,7 @@ const Login = () => {
             <div>
               {/* welcome */}
               <div>
-                <h1>Login</h1>
+                <h1 className={"text-red-600"}>Login</h1>
               </div>
               {/* Form */}
               <form onSubmit={handleSubmit(onSubmit)}>

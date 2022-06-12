@@ -71,6 +71,13 @@ app.post("/upload", function (req, res) {
   res.send("UPLOADED!!!");
 });
 
+const previousYearRouter = require('./routes/previousYearQues')
+app.use('/previousyearquestions', previousYearRouter)
+
+const chapterWiseRouter = require('./routes/chapterWiseQues')
+app.use('/chapterwisequestions', chapterWiseRouter)
+
+
 app.listen(PORT, () => {
   console.log(`Server is Running ${PORT}`);
 });

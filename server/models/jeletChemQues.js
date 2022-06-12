@@ -13,7 +13,7 @@ const chemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    solutionImage: {
+    solutionImagePath: {
         type: [String],
     },
     isPreviousYearQuestion: {
