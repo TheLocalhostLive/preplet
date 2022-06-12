@@ -3,12 +3,10 @@ const fs = require("fs");
 const { google } = require("googleapis");
 require("dotenv").config();
 
-const client_id =
-  "231333435044-ir0747la9sl3me3rppi71eeme5kvopb8.apps.googleusercontent.com";
-const client_secret = "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";
+const client_id = process.env.G_DRIVE_CLIENT_ID;
+const client_secret = process.env.G_DRIVE_SECRET;
 const redirect_uri = "https://developers.google.com/oauthplayground";
-const refresh_token =
-  "1//0494cR9oWq6PtCgYIARAAGAQSNwF-L9IrCPe9PYmlVKaom4xQq6x4-TP4JbbXLLqBAfUO1-rU9gOnP9tIn_gIpEOvRqPf5gT_IAw";
+const refresh_token = process.env.G_DRIVE_REFRESH_TOKEN;
 
 const oauth2Client = new google.auth.OAuth2(
   client_id,
