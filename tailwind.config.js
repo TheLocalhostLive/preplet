@@ -5,6 +5,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily:{
+        Jost: ["Jost"],
+      },
       animation: {
         blob: "blob 7s infinite",
       },
@@ -29,14 +32,23 @@ module.exports = {
           500: "#f76116",
           400: "#f77416",
         },
-        purple: {
-          500: "#CA10E7",
-          600: "#8E066B",
-          700: "#900C3F",
-        },
+        // purple: {
+        //   500: "#CA10E7",
+        //   600: "#8E066B",
+        //   700: ""
+        // },
         black: {
           bg: "#050505",
         },
+        'spurple': '#3f3cbb',
+        'midnight': '#121063',
+        'metal': '#565584',
+        'tahiti': '#3ab7bf',
+        'silver': '#ecebff',
+        'bubble-gum': '#ff77e9',
+        'spink':'#ed80fd',
+        'hotpink':'#ff69b4',
+        'purpleh':'#7e22ce'
       },
       margin: {
         110: "36rem",
