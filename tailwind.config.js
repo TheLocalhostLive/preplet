@@ -48,7 +48,8 @@ module.exports = {
         'bubble-gum': '#ff77e9',
         'spink':'#ed80fd',
         'hotpink':'#ff69b4',
-        'purpleh':'#7e22ce'
+        'purpleh':'#7e22ce',
+        'skyblue':'#67e8f9'
       },
       margin: {
         110: "36rem",
