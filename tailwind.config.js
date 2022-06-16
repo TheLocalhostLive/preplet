@@ -60,6 +60,7 @@ module.exports = {
       },
       backgroundImage: {
         team: "url('/images/Team-b.png')",
+        
         // 'footer-texture': "url('/img/footer-texture.png')",
       },
     },
