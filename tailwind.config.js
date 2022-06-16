@@ -5,6 +5,13 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Russo One"],
+        fancy: ["Dancing Script"],
+        beba: ["Bebas Neue"],
+        secular:["Secular One"],
+        cinzel :["Cinzel"]
+      },
       animation: {
         blob: "blob 7s infinite",
       },
