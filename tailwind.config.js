@@ -5,8 +5,20 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fontFamily:{
+
+      fontFamily: {
         Jost: ["Jost"],
+        sans: ["Russo One"],
+        fancy: ["Dancing Script"],
+        beba: ["Bebas Neue"],
+      },
+      boxShadow: {
+        "3in": "inset 0px 4px 4px rgba(0, 0, 0, 0.25)",
+        "3xl": "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      },
+      backgroundImage: {
+        "sub-menu":
+          "linear-gradient(180deg, rgba(234, 229, 229, 0.6) 0%, rgba(246, 246, 246, 0.36) 100%)",
       },
       animation: {
         blob: "blob 7s infinite",
@@ -26,6 +38,9 @@ module.exports = {
             transform: "translate(0px,0px) scale(1)",
           },
         },
+      },
+      borderRadius: {
+        tc: "50px 50px 0px 0px",
       },
       colors: {
         orange: {
@@ -57,6 +72,7 @@ module.exports = {
       },
       backgroundImage: {
         team: "url('/images/Team-b.png')",
+        
         // 'footer-texture': "url('/img/footer-texture.png')",
       },
     },
