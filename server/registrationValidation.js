@@ -18,7 +18,7 @@ const registerValidation = data => {
     password: new passwordComplexity({
       min: 8,
       max: 25,
-      lowerCase: 1,
+      lowerCase: 1,  
       upperCase: 1,
       numeric: 1,
       symbol: 1,
