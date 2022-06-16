@@ -129,7 +129,9 @@ const Login = () => {
                     {/* Links */}
                     <div className="text-center pt-4">
                       <Link href="/Forget">
-                          <a className="text-center pt-5 underline underline-offset-1">Forgot Password?</a>
+                        <a className="text-center pt-5 underline underline-offset-1">
+                          Forget Password?
+                        </a>
                       </Link>
                       </div>
                     <p className="text-center">OR</p>
