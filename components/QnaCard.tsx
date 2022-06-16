@@ -3,10 +3,21 @@ import { useState, useContext } from "react";
 
 import { AuthContext } from "../context/AuthContext";
 
-export default function QnaCard() {
+interface QnaProps {
+  question: string;
+  solution: string;
+  chapter: string;
+  year: number | null;
+}
+export default function QnaCard({
+  question,
+  solution,
+  chapter,
+  year,
+}: QnaProps) {
   const [displayToolMenu, setDisplayToolMenu] = useState(false);
-  const { isAdmin } = useContext(AuthContext);
-
+  // const { isAdmin } = useContext(AuthContext);
+  const isAdmin = true;
   const showToolMenu = () => {
     setDisplayToolMenu(true);
   };
@@ -16,39 +27,49 @@ export default function QnaCard() {
 
   return (
     <div className="relative flex flex-col p-4 sm:w-2/3 w-[319px] rounded-xl min-h-[144px] bg-white m-4 shadow-3xl">
-      <div className="text-sm">Question:</div>
-      <div>Solution:</div>
-      <div className="flex mt-20 text-[10px]">
-        {/* year */}
-        <div className="flex items-center mx-5">
-          <svg
-            width="8"
-            height="8"
-            viewBox="0 0 8 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="4" cy="4" r="4" fill="#FF1616" />
-          </svg>
-          <span className="m-1">2020</span>
-        </div>
-        {/* chapter */}
-        <div className="flex items-center">
-          <svg
-            width="8"
-            height="8"
-            viewBox="0 0 8 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="4" cy="4" r="4" fill="#7DFF16" />
-          </svg>
+      <div
+        className="text-sm"
+        dangerouslySetInnerHTML={{ __html: "<b>Question: </b>" + question }}
+      ></div>
+      <div
+        className="text-sm"
+        dangerouslySetInnerHTML={{ __html: "<b>Solution: </b>" + solution }}
+      ></div>
+      <div className="flex w-full justify-between mt-20 text-[12px]">
+        <div className="flex">
+          {/* year */}
+          {year ? (
+            <div className="flex items-center mx-5">
+              <svg
+                width="8"
+                height="8"
+                viewBox="0 0 8 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="4" cy="4" r="4" fill="#FF1616" />
+              </svg>
+              <span className="m-1">{year}</span>
+            </div>
+          ) : null}
+          {/* chapter */}
+          <div className="flex items-center">
+            <svg
+              width="8"
+              height="8"
+              viewBox="0 0 8 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="4" cy="4" r="4" fill="#7DFF16" />
+            </svg>
 
-          <span className="m-1">Atomic Structure </span>
+            <span className="m-1">{chapter} </span>
+          </div>
         </div>
         {isAdmin && (
           <BsThreeDotsVertical
-            className="text-lg cursor-pointer sm:ml-[55%] ml-[30%]"
+            className="text-lg cursor-pointer "
             onClick={showToolMenu}
           />
         )}

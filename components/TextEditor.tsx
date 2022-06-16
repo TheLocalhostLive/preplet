@@ -10,10 +10,15 @@ const Editor = dynamic(
 );
 interface TextEditorProps {
   placeholder: string;
+  editorState: any;
+  setEditorState: any;
 }
 
-export default function TextEditor({ placeholder }: TextEditorProps) {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+export default function TextEditor({
+  placeholder,
+  editorState,
+  setEditorState,
+}: TextEditorProps) {
   //console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
   const onEditorStateChange = (editorState: any) => {
     setEditorState(editorState);

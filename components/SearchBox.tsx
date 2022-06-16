@@ -3,8 +3,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 export default function SearchBox() {
   return (
-    <div className="w-full mx-[30%] ">
-      <AiOutlineSearch className="absolute top-[42%] left-[31%] text-md text-[#000]" />
+    <div className="relative">
+      <AiOutlineSearch className="absolute top-3 left-3" />
       <input
         type="text"
         placeholder="Search..."
@@ -35,3 +35,5 @@ export default function SearchBox() {
 
 // background: #EFEFEF;
 // border-radius: 50px 50px 0px 0px;
+
+//absolute sm:top-[42%] top-[68px] sm:left-[31%] left-5 text-md text-[#000]

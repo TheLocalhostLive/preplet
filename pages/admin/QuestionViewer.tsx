@@ -12,11 +12,14 @@ export default function QuestionViewer() {
   const [showStickySubjectName, setShowStickySubjectName] = useState(false);
 
   const scrollListener = () => {
-    if (window.scrollY >= 137) {
+    if (window.scrollY >= 96 && !showStickySubjectName) {
       setShowStickySubjectName(true);
-    } else if (showStickySubjectName) {
+      console.log("re render");
+    } else if (window.scrollY < 96 && showStickySubjectName) {
       setShowStickySubjectName(false);
+      console.log("re render 2");
     }
+    console.log(showStickySubjectName);
     console.log(window.scrollY);
   };
 
@@ -33,6 +36,7 @@ export default function QuestionViewer() {
       <div className="flex flex-col w-full">
         {/* heading */}
         <div className="flex h-24 items-center px-5">
+          <AiOutlineMenu className="sm:hidden flex h-6 w-7 ml-1 mr-4" />
           {<span className="font-beba text-5xl">Chemistry</span>}
         </div>
 
@@ -46,20 +50,23 @@ export default function QuestionViewer() {
                   "z-50 flex flex-col justify-center sticky sm:w-full w-screen sm:h-[90px] h-[100px] top-0 bg-[#EFEFEF]"
             }
           >
-            <div className="flex ">
-              <AiOutlineMenu className="sm:hidden flex h-6 w-7 mx-5" />
-              {showStickySubjectName ? (
+            {showStickySubjectName ? (
+              <div className="flex items-center md-3">
+                <AiOutlineMenu className="sm:hidden flex h-6 w-7 mx-5" />
                 <span className="font-beba text-3xl ">Chemistry</span>
-              ) : (
-                <span className="font-beba text-3xl opacity-0">Chemistry</span>
-              )}
-            </div>
+              </div>
+            ) : (
+              <span className="font-beba text-3xl opacity-0">Chemistry</span>
+            )}
+
             <div className="w-full flex justify-center items-center">
               <SearchBox />
             </div>
           </div>
 
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(k => (
+          {[
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          ].map(k => (
             <QnaCard key={k} />
           ))}
         </div>
