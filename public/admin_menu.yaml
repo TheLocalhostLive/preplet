@@ -1,0 +1,12 @@
+- label: Dashboard
+  subItems: []
+- label: Upload JELLET Questions
+  subItems:
+    - label: Physics
+      subItems: []
+    - label: Chemistry
+      subItems: []
+    - label: Mathematics
+      subItems: []
+    - label: Electrical
+      subItems: []
