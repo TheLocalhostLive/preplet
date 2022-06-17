@@ -22,8 +22,8 @@ interface RequestPayload {
 const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
   // console.log(qna);
   // return <></>;
-  // const { isAdmin } = useContext(AuthContext);
-  const isAdmin = true;
+  const { isAdmin } = useContext(AuthContext);
+  // const isAdmin = true;
   const [showStickySubjectName, setShowStickySubjectName] = useState(false);
   const [showQnaAdder, setShowQnaAdder] = useState(false);
 

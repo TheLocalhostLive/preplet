@@ -29,6 +29,7 @@ export default function ProtectedRoute({ children }: any) {
             .then(resp => {
               if (resp.status === 200 && resp.ok) {
                 setLoginStatus(true);
+                // console.log(login stat)
               } else {
                 router.push("/Login");
               }
