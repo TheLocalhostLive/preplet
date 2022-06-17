@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <body className="  font-Jost">
+      <body className="w-screen font-Jost">
         {/* <!--Header--> */}
         <header>
           <nav className="container flex items-center py-4  mt-2 sm:mt-2">
@@ -49,8 +49,8 @@ const Home: NextPage = () => {
         </header>
 
         {/* <!--hero--> */}
-        <section className="relative  py-1 mt-1 lg:mt-1 bg-origin-padding p-4  ">
-          <div className="container flex flex-col lg:flex-row items-center gap-12 mt-1 lg:mt-1 max-w-screen-xl rounded-3xl  bg-gradient-to-r from-purple-700 to-pink-300">
+        <section className="w-screen  py-1 mt-1 lg:mt-1 bg-origin-padding p-4  ">
+          <div className="container flex flex-col lg:flex-row items-center  mt-1 lg:mt-1 w-screen rounded-3xl  bg-gradient-to-r from-purple-700 to-pink-300">
             <div className="flex flex-1 flex-col items-center lg:items-start pl-6">
               <h2 className="text-white font-bold text-4xl md:text-4 lg:text-6xl text-center lg:text-left  mb-6">
                 Crack JELET with PrepLet
