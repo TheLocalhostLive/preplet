@@ -12,8 +12,8 @@ export default function ProtectedRoute({ children }: any) {
   useEffect(() => {
     console.log(router.pathname);
     if (!loginStatus) {
-      const token = router.query.token;
       if (router.pathname === "/Dashboard") {
+        const token = router.query.token;
         console.log(JSON.stringify({ token }));
         if (!token) {
           router.push("/Login");
@@ -29,7 +29,7 @@ export default function ProtectedRoute({ children }: any) {
             .then(resp => {
               if (resp.status === 200 && resp.ok) {
                 setLoginStatus(true);
-                // console.log(login stat)
+                console.log("login stat");
               } else {
                 router.push("/Login");
               }
@@ -42,10 +42,11 @@ export default function ProtectedRoute({ children }: any) {
             });
         }
       } else if (!loading) {
+        console.log("here");
         router.push("/Login");
       }
     }
-  }, [loading]);
+  }, [loading, router.pathname]);
 
   return <>{loginStatus ? children : null}</>;
 }

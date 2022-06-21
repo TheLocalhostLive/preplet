@@ -20,8 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if (loginStatus) {
-      if (isAdmin) router.push("/admin/Dashboard");
-      else router.push("/Dashboard");
+      router.push("/Dashboard");
     }
   });
 
@@ -63,8 +62,7 @@ const Login = () => {
         setLoginStatus(true);
         setIsAdmin(isAdmin);
         toast.success("Logged In successfully");
-        if (isAdmin) router.push("/admin/Dashboard");
-        else router.push("/Dashboard");
+        router.push("/Dashboard");
       } else if (response.status === 400) {
         toast.error(message);
       }

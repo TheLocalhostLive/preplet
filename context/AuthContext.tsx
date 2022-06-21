@@ -26,7 +26,9 @@ export const AuthContext =
 function AuthContextProvider(props: any) {
   const [loginStatus, setLoginStatus] = useState(false);
   const router = useRouter();
-  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
+  let serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
+  //const serverURL = router.pathname;
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +47,11 @@ function AuthContextProvider(props: any) {
   }
 
   useEffect(() => {
+    // serverURL = window.location.origin;
+    // serverURL.slice(0, -1);
+    // serverURL += "5";
+    // console.log(window.location);
+    // console.log(serverURL);
     getLoginStatus().then(({ status, isAdmin }) => {
       setLoginStatus(status);
       setIsAdmin(isAdmin);

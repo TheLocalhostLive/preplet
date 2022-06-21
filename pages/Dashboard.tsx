@@ -15,7 +15,14 @@ import {
   AiOutlineMenu,
 } from "react-icons/ai";
 
+import MenuBar from "../components/MenuBar";
+async function fetchData() {
+  const result = await fetch("http://localhost:3000/menu.yaml");
+  const data = await result.json();
+  console.log(data);
+}
 const Home: NextPage = () => {
+  fetchData();
   let { loginStatus, serverURL } = useContext(AuthContext);
   const router = useRouter();
   const handleLogout = async () => {
@@ -47,102 +54,7 @@ const Home: NextPage = () => {
       </Head>
 
       <body className="flex relative">
-        <nav className=" h-screen ">
-          <div className=" w-64  h-screen bg-gradient-to-r from-sky-900 to-fuchsia-600">
-            <span className=" flex py-3  justify-center h-10 text-3xl font-beba">
-              WELCOME
-            </span>
-
-            <div className="flex justify-start items-center">
-              <div className="flex flex-col my-2 justify-center space-y-[0.8px]">
-                <div className="flex w-4 h-[4px] py-0 mx-4 bg-gray-600"></div>
-                <div className="flex w-4 h-[4px] py-0 mx-4 bg-gray-600"></div>
-                <div className="flex w-4 h-[4px] py-0 mx-4 bg-gray-600"></div>
-              </div>
-              <div className="]">Name</div>
-            </div>
-
-            <div className="flex items-center">
-              <img
-                src="dashboard-icn.png "
-                alt=""
-                height="50"
-                width="50"
-                className="mx-3"
-              />
-              <span className="font-secular px-0">Name</span>
-            </div>
-
-            <div className=" flex relative items-center justify-center h-8">
-              <input
-                className="absolute left-4 text-[10px] flex w-36 my-5 px-5 h-5 shadow-gray-50 bg-[#EDEDEDCF] outline-none inset shadow-inner rounded"
-                type="text"
-                name=""
-                placeholder="Seach here"
-              />
-              <AiOutlineSearch className="absolute left-5 text-[10px] " />
-            </div>
-
-            <div>
-              <ul className="flex flex-col text-xs w-44 ">
-                <li className="flex items-center py-1">
-                  <AiFillDatabase className="mx-3" />
-                  <span className="mx-1 font-secular text-lg ">Dashboard</span>
-                </li>
-                <li className="flex items-center py-1">
-                  <AiOutlineRead className="mx-3" />
-                  <span className="mx-1 font-secular text-lg">
-                    Jelet Topic Wise Question{" "}
-                  </span>
-                </li>
-                <ul>
-                  <li className=" flex mx-6 items-center ">
-                    <AiOutlineDeploymentUnit className="mx-3" />
-                    <span className="font-secular text-lg">Chemistry</span>
-                  </li>
-                  <li className="flex mx-6 items-center">
-                    <AiTwotoneSound className="mx-3 font-secular" />
-                    <span className="font-secular text-lg">Physics</span>
-                  </li>
-                  <li className=" flex mx-6 items-center">
-                    <AiFillCalculator className="mx-3" />
-                    <span className="font-secular text-lg"> Mathematics</span>
-                  </li>
-                </ul>
-                <li className="flex items-center py-1 ">
-                  <AiOutlineRead className="mx-3" />
-                  <span className="font-secular text-lg">
-                    Jelet Previous Question
-                  </span>
-                </li>
-                <ul>
-                  <li className=" flex mx-6 items-center">
-                    <AiOutlineDeploymentUnit className="mx-3" />
-                    <span className="font-secular text-lg">Chemistry</span>
-                  </li>
-                  <li className=" flex mx-6 items-center">
-                    <AiTwotoneSound className="mx-3" />
-                    <span className="font-secular text-lg">Physics</span>
-                  </li>
-                  <li className=" flex mx-6 items-center">
-                    <AiFillCalculator className="mx-4" />
-                    <span className="font-secular text-lg"> Mathematics </span>
-                  </li>
-                </ul>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-        <div className="image flex  h-64  justify-center  ">
-          <img src="pictures/dashboard.jpg" alt="" />
-          <div className="my-72 absolute bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded">
-            <span className=" font-cinzel p-2 text-cyan-50"> NO ACTIVITY </span>
-          </div>
-        </div>
-        <div>
-          <video src="pictures/video" height="20" width="320"></video>
-        </div>
+        <MenuBar className="hidden sm:flex" />
       </body>
     </>
   );
