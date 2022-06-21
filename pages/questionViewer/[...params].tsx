@@ -26,7 +26,7 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
   // const isAdmin = true;
   const [showStickySubjectName, setShowStickySubjectName] = useState(false);
   const [showQnaAdder, setShowQnaAdder] = useState(false);
-
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const scrollListener = () => {
     if (window.scrollY >= 96 && !showStickySubjectName) {
       setShowStickySubjectName(true);
@@ -52,11 +52,15 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
 
   return (
     <div className="flex relative">
-      <MenuBar className="hidden sm:flex" />
+      <MenuBar className={`${isMenuOpen ? "" : "hidden "} sm:flex`} />
       <div className="flex flex-col w-full">
         {/* heading */}
         <div className="flex h-24 items-center px-5">
-          <AiOutlineMenu className="sm:hidden flex h-6 w-7 ml-1 mr-4" />
+          <AiOutlineMenu
+            onClick={() => setMenuOpen(!isMenuOpen)}
+            className="sm:hidden flex h-6 w-7 ml-1 mr-4"
+          />
+          {/*Menu icon*/}
           {<span className="font-beba text-5xl">{subject}</span>}
         </div>
 
@@ -72,7 +76,11 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
           >
             {showStickySubjectName ? (
               <div className="flex items-center md-3">
-                <AiOutlineMenu className="sm:hidden flex h-6 w-7 mx-5" />
+                {/*Menu icon*/}
+                <AiOutlineMenu
+                  onClick={() => setMenuOpen(!isMenuOpen)}
+                  className="sm:hidden flex h-6 w-7 mx-5"
+                />
                 <span className="font-beba text-3xl ">{subject}</span>
               </div>
             ) : (
