@@ -13,13 +13,21 @@ interface QuestionProps {
   qna: any;
   subject: string;
   subjectCode: string;
+  chapter: string;
+  year: string | number;
 }
 interface RequestPayload {
   subject: string;
   param: number | string;
 }
 
-const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
+const QuestionViewer = ({
+  qna,
+  subject,
+  subjectCode,
+  chapter,
+  year,
+}: QuestionProps) => {
   // console.log(qna);
   // return <></>;
   const { isAdmin } = useContext(AuthContext);
@@ -43,6 +51,10 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
     setShowQnaAdder(false);
   };
 
+  function getChapterName(chapter: string) {
+    return chapter.split("_").join(" ");
+  }
+
   useEffect(() => {
     window.addEventListener("scroll", scrollListener);
     return () => {
@@ -61,7 +73,11 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
             className="sm:hidden flex h-6 w-7 ml-1 mr-4"
           />
           {/*Menu icon*/}
-          {<span className="font-beba text-5xl">{subject}</span>}
+          {
+            <span className="font-beba capitalize text-3xl">
+              {subject}-{getChapterName(chapter)}
+            </span>
+          }
         </div>
 
         <div className="bg-[#EFEFEF] min-h-screen p-5 flex flex-col items-center rounded-tc">
@@ -114,6 +130,7 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
         <JELETQnaAdder
           uploadURL={`http://localhost:3005/question/${subjectCode}`}
           onDelete={hideQnaAdder}
+          chapter={chapter}
         />
       )}
     </div>
@@ -151,12 +168,12 @@ export async function getServerSideProps(context: any) {
     chem: "Chemistry",
     phys: "Physics",
     feee: "FEEE",
-    maths: "Maths",
+    math: "Maths",
   };
 
   let subject = "",
     chapter = "",
-    year: number,
+    year = null,
     endPoint = "";
   let questions = null,
     payload = null;
@@ -186,6 +203,8 @@ export async function getServerSideProps(context: any) {
       props: {
         qna: [],
         subject: "invalid!",
+        chapter: null,
+        year: null,
       },
     };
   }
@@ -196,6 +215,8 @@ export async function getServerSideProps(context: any) {
       qna: questions,
       subject: subjectCodes[subject as keyof typeof subjectCodes],
       subjectCode: subject,
+      chapter,
+      year,
     },
   };
 }

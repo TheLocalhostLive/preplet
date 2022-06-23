@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { AiFillCaretDown } from "react-icons/ai";
+import { AiFillCaretDown, AiOutlinePoweroff } from "react-icons/ai";
 import SearchBox from "./SearchBox";
-
+import {
+  physicsChapters,
+  chemChapters,
+  mathChapters,
+  feeeChapters,
+} from "./menu";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 interface MenuProps {
   className: string;
 }
-async function fetchData() {
-  const result = await fetch("http://localhost:3000/menu.yaml");
-  const data = await result.json();
-  console.log(data);
+function getChapterId(chapter: string) {
+  const result = Array.from(chapter).map(char => {
+    if (char === " ") return "_";
+    if (char.match(/\w/) || char.match(/\d/)) return char.toLowerCase();
+    return "";
+  });
+
+  //console.log(result.join());
+  return result.join("");
 }
+
 const chapterWiseBaseURL = "/questionViewer/chapter_wise";
 const prevYearBaseURL = "/questionViewer/prev_year";
 export default function MenuBar({ className }: MenuProps) {
@@ -20,6 +33,7 @@ export default function MenuBar({ className }: MenuProps) {
   const [isMathSubjectOpen, setMathSubjectOpen] = useState(false);
   const [isFEEESubjectOpen, setFEEESubjectOpen] = useState(false);
   const [isPrevYearOpen, setPrevYearOpen] = useState(false);
+  const { logout } = useContext(AuthContext);
   //const years = [2021, 2022];
   const [years, setYearOpen] = useState([
     { value: 2022, isOpen: false },
@@ -60,6 +74,13 @@ export default function MenuBar({ className }: MenuProps) {
       <div className="flex items-center">
         <img src="http://localhost:3000/avtar.webp" className="h-20" />
         <span>Joydeep Bhattacharjee</span>
+        <button
+          className="m-2 flex items-center justify-between text-xs text-red-600"
+          onClick={logout}
+        >
+          <AiOutlinePoweroff />
+          Logout
+        </button>
       </div>
       <SearchBox width={"200px"} bg={"#EFEFEF"} />
       {/* list */}
@@ -101,93 +122,18 @@ export default function MenuBar({ className }: MenuProps) {
                 <ul
                   className={"ml-2 " + (isPhysicsSubjectOpen ? "" : "hidden")}
                 >
-                  <Link
-                    href={
-                      chapterWiseBaseURL +
-                      "/phys/unit_dimesions_and_measurement"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">
-                        Unit, Dimesions and measurement
-                      </h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/kinamatics"}>
-                    <li>
-                      <h1 className="menu-items">Kinamatics</h1>
-                    </li>
-                  </Link>
-
-                  <Link
-                    href={chapterWiseBaseURL + "/phys/work_power_and_energy"}
-                  >
-                    <li>
-                      <h1 className="menu-items">Work Power and energy</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/gravitation"}>
-                    <li>
-                      <h1 className="menu-items">Gravitation</h1>
-                    </li>
-                  </Link>
-
-                  <Link href={chapterWiseBaseURL + "/phys/elasticity"}>
-                    <li>
-                      <h1 className="menu-items">Elasticity</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/surface_tension"}>
-                    <li>
-                      <h1 className="menu-items">Surface Tension</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={
-                      chapterWiseBaseURL + "/phys/fluid_mechanics_hydrostatics"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">
-                        Fluid mechanics / Hydrostatics
-                      </h1>
-                    </li>
-                  </Link>
-
-                  <Link
-                    href={
-                      chapterWiseBaseURL + "/phys/thermal_expansion_of_solid"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">Thermal Expansion of solid</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/transmition_of_heat"}>
-                    <li>
-                      <h1 className="menu-items">Transmition of heat</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/thermodynamics"}>
-                    <li>
-                      <h1 className="menu-items">Thermodynamics</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/reflection_of_light"}>
-                    <li>
-                      <h1 className="menu-items">Reflection of light</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/lens"}>
-                    <li>
-                      <h1 className="menu-items">Lens</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/phys/photoelectricity"}>
-                    <li>
-                      <h1 className="menu-items">Photoelectricity</h1>
-                    </li>
-                  </Link>
+                  {physicsChapters.map(chapter => (
+                    <Link
+                      href={
+                        chapterWiseBaseURL + "/phys/" + getChapterId(chapter)
+                      }
+                      key={getChapterId(chapter)}
+                    >
+                      <li>
+                        <h1 className="menu-items">{chapter}</h1>
+                      </li>
+                    </Link>
+                  ))}
                 </ul>
               </li>
               {/* Chemistry */}
@@ -204,45 +150,18 @@ export default function MenuBar({ className }: MenuProps) {
                   />
                 </span>
                 <ul className={"ml-2 " + (isChemSubjectOpen ? "" : "hidden")}>
-                  <Link href={chapterWiseBaseURL + "/chem/atomic_structure"}>
-                    <li>
-                      <h1 className="menu-items">Atomic Structure</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/chem/chemical_bonding"}>
-                    <li>
-                      <h1 className="menu-items">Chemical Bonding</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={
-                      chapterWiseBaseURL +
-                      "/chem/oxidation_reduction_electrochemistry"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">
-                        Oxidation, Reduction, Electrochemistry
-                      </h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={chapterWiseBaseURL + "/chem/chemical_equilibrium"}
-                  >
-                    <li>
-                      <h1 className="menu-items">Chemical Equilibrium</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/chem/Water"}>
-                    <li>
-                      <h1 className="menu-items">Water</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/chem/organic_chemistry"}>
-                    <li>
-                      <h1 className="menu-items">Organic Chemistry</h1>
-                    </li>
-                  </Link>
+                  {chemChapters.map(chapter => (
+                    <Link
+                      href={
+                        chapterWiseBaseURL + "/chem/" + getChapterId(chapter)
+                      }
+                      key={getChapterId(chapter)}
+                    >
+                      <li>
+                        <h1 className="menu-items">{chapter}</h1>
+                      </li>
+                    </Link>
+                  ))}
                 </ul>
               </li>
               {/* Mathematics */}
@@ -259,76 +178,18 @@ export default function MenuBar({ className }: MenuProps) {
                   />
                 </span>
                 <ul className={"ml-2 " + (isMathSubjectOpen ? "" : "hidden")}>
-                  <Link href={chapterWiseBaseURL + "/math/matrix"}>
-                    <li>
-                      <h1 className="menu-items">Matrix</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/math/determinant"}>
-                    <li>
-                      <h1 className="menu-items">Determinant</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/math/complex_number"}>
-                    <li>
-                      <h1 className="menu-items">Complex Number</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/math/coordinate_geometry"}>
-                    <li>
-                      <h1 className="menu-items">Co-ordinate Geometry</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/math/vector_algebra"}>
-                    <li>
-                      <h1 className="menu-items">Vector Algebra</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={chapterWiseBaseURL + "/math/differential_equation"}
-                  >
-                    <li>
-                      <h1 className="menu-items">Differential Equation </h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={
-                      chapterWiseBaseURL + "/math/application_of_derivative"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">Application of Derivative</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={chapterWiseBaseURL + "/math/parital_differentiation"}
-                  >
-                    <li>
-                      <h1 className="menu-items">Parital Differentiation</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/math/integral_calculas"}>
-                    <li>
-                      <h1 className="menu-items">Integral Calculas</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={
-                      chapterWiseBaseURL +
-                      "/math/ordinary_differential_equations"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">
-                        Ordinary Differential Equations
-                      </h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/math/probability"}>
-                    <li>
-                      <h1 className="menu-items">Probability</h1>
-                    </li>
-                  </Link>
+                  {mathChapters.map(chapter => (
+                    <Link
+                      href={
+                        chapterWiseBaseURL + "/math/" + getChapterId(chapter)
+                      }
+                      key={getChapterId(chapter)}
+                    >
+                      <li>
+                        <h1 className="menu-items">{chapter}</h1>
+                      </li>
+                    </Link>
+                  ))}
                 </ul>
               </li>
               {/* FEEE */}
@@ -348,61 +209,18 @@ export default function MenuBar({ className }: MenuProps) {
                   />
                 </span>
                 <ul className={"ml-2 " + (isFEEESubjectOpen ? "" : "hidden")}>
-                  <Link
-                    href={
-                      chapterWiseBaseURL +
-                      "/feee/electrical_components_measuring_instruments"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">
-                        Electrical Components, measuring instruments
-                      </h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/feee/transformers"}>
-                    <li>
-                      <h1 className="menu-items">Transformers</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/feee/electrical_machines"}>
-                    <li>
-                      <h1 className="menu-items">Electrical Machines</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={chapterWiseBaseURL + "/feee/dc_source_and_circuits"}
-                  >
-                    <li>
-                      <h1 className="menu-items">DC source and circuits</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={chapterWiseBaseURL + "/feee/ac_source_and_circuits"}
-                  >
-                    <li>
-                      <h1 className="menu-items">AC source and circuits</h1>
-                    </li>
-                  </Link>
-                  <Link
-                    href={
-                      chapterWiseBaseURL + "/feee/basic_semiconductor_device"
-                    }
-                  >
-                    <li>
-                      <h1 className="menu-items">Basic Semiconductor device</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/feee/analog_circuits"}>
-                    <li>
-                      <h1 className="menu-items">Analog Circuits</h1>
-                    </li>
-                  </Link>
-                  <Link href={chapterWiseBaseURL + "/feee/digital_circuits"}>
-                    <li>
-                      <h1 className="menu-items">Digital Circuits</h1>
-                    </li>
-                  </Link>
+                  {feeeChapters.map(chapter => (
+                    <Link
+                      href={
+                        chapterWiseBaseURL + "/feee/" + getChapterId(chapter)
+                      }
+                      key={getChapterId(chapter)}
+                    >
+                      <li>
+                        <h1 className="menu-items">{chapter}</h1>
+                      </li>
+                    </Link>
+                  ))}
                 </ul>
               </li>
             </ul>
