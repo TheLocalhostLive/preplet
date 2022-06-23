@@ -8,7 +8,7 @@ const physQuesUp = require("../models/jeletPhysQues");
 router.post("/chem/edit/", async (req, res) => {
   try {
     const editQues = await chemQuesUp.findOne({
-      id: req.body.id
+      _id: req.body.id
     });
     console.log(editQues);
     editQues.question = req.body.question;
@@ -31,8 +31,7 @@ router.post("/chem/edit/", async (req, res) => {
 router.post("/math/edit", async (req, res) => {
   try {
     const editQues = await mathQuesUp.findOne({
-      id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
+      _id: req.body.id,
     });
     editQues.question = req.body.question;
     editQues.questionImagePath = req.body.questionImagePath;
@@ -40,6 +39,7 @@ router.post("/math/edit", async (req, res) => {
     editQues.solutionImage = req.body.solutionImage;
     editQues.isPreviousYearQuestion = req.body.isPreviousYearQuestion;
     editQues.year = req.body.year;
+    editQues.chapter = req.body.chapter;
 
     const q1 = await editQues.save();
     res.json(q1);
@@ -51,15 +51,17 @@ router.post("/math/edit", async (req, res) => {
 router.post("/phys/edit", async (req, res) => {
   try {
     const editQues = await physQuesUp.findOne({
-      id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
+      _id: req.body.id,
     });
+    console.log(editQues);
+    console.log(req.body.id);
     editQues.question = req.body.question;
     editQues.questionImagePath = req.body.questionImagePath;
     editQues.solution = req.body.solution;
     editQues.solutionImage = req.body.solutionImage;
     editQues.isPreviousYearQuestion = req.body.isPreviousYearQuestion;
     editQues.year = req.body.year;
+    editQues.chapter = req.body.chapter;
 
     const q1 = await editQues.save();
     res.json(q1);
@@ -72,8 +74,7 @@ router.post("/phys/edit", async (req, res) => {
 router.post("/feee/edit", async (req, res) => {
   try {
     const editQues = await feeeQuesUp.findOne({
-      id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
+      _id: req.body.id,
     });
     editQues.question = req.body.question;
     editQues.questionImagePath = req.body.questionImagePath;
@@ -81,6 +82,7 @@ router.post("/feee/edit", async (req, res) => {
     editQues.solutionImage = req.body.solutionImage;
     editQues.isPreviousYearQuestion = req.body.isPreviousYearQuestion;
     editQues.year = req.body.year;
+    editQues.chapter = req.body.chapter;
 
     const q1 = await editQues.save();
     res.json(q1);
@@ -95,8 +97,7 @@ router.post("/feee/edit", async (req, res) => {
 router.get("/chem/delete", async (req, res) => {
   try {
     const editQues = await chemQuesUp.findOne({
-      id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
+      _id: req.body.id,
     });
     const q1 = await editQues.remove();
     res.json({ message: "Question Deleted", erro: false });
@@ -109,8 +110,7 @@ router.get("/chem/delete", async (req, res) => {
 router.get("/math/delete", async (req, res) => {
   try {
     const editQues = await mathQuesUp.findOne({
-      id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
+      _id: req.body.id,
     });
     const q1 = await editQues.remove();
     res.json({ message: "Question Deleted", erro: false });
@@ -122,8 +122,7 @@ router.get("/math/delete", async (req, res) => {
 router.get("/phys/delete", async (req, res) => {
   try {
     const editQues = await physQuesUp.findOne({
-      id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
+      _id: req.body.id,
     });
     const q1 = await editQues.remove();
     res.json({ message: "Question Deleted", erro: false });
@@ -137,7 +136,6 @@ router.get("/feee/delete", async (req, res) => {
   try {
     const editQues = await feeeQuesUp.findOne({
       _id: req.body.id,
-      isPreviousYearQuestion: req.body.isPreviousYearQuestion,
     });
     const q1 = await editQues.remove();
     res.json({ message: "Question Deleted", erro: false });
@@ -146,5 +144,4 @@ router.get("/feee/delete", async (req, res) => {
     res.status(400).json({ message: "Unable to Delete", error: true });
   }
 });
-
 module.exports = router;
