@@ -93,7 +93,7 @@ router.post('/',async(req,res)=>{
                 subject: "Reset Password Link",
                 html: `<h1> GirlFriend ka number toh bhulta </h1>
                               <h2> Click below link to reset password </h2> 
-                           <a href = "http://localhost:3005/verify-email?token=${onetime_key }">Click to reset password</a>
+                           <a href = "http://localhost:3005/reset-password?token=${onetime_key }">Click to reset password</a>
                               `,
               };
       
