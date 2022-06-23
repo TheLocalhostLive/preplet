@@ -9,6 +9,7 @@ interface AuthContextInterface {
   serverURL: string | undefined;
   isAdmin: boolean;
   setIsAdmin: any;
+  logout: any;
 }
 
 const defaultAuthValues = {
@@ -18,6 +19,7 @@ const defaultAuthValues = {
   serverURL: "",
   isAdmin: false,
   setIsAdmin: null,
+  logout: null,
 };
 
 export const AuthContext =
@@ -45,7 +47,19 @@ function AuthContextProvider(props: any) {
     }
     return { status: false, isAdmin: false };
   }
-
+  const logout = async () => {
+    try {
+      const response = await fetch(serverURL + "/logout", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      console.log(data.message);
+      setLoginStatus(false);
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     // serverURL = window.location.origin;
     // serverURL.slice(0, -1);
@@ -68,6 +82,7 @@ function AuthContextProvider(props: any) {
         serverURL,
         isAdmin,
         setIsAdmin,
+        logout,
       }}
     >
       {props.children}

@@ -10,6 +10,7 @@ export default function ProtectedRoute({ children }: any) {
     useContext(AuthContext);
 
   useEffect(() => {
+    if (!router.isReady) return;
     console.log(router.pathname);
     if (!loginStatus) {
       if (router.pathname === "/Dashboard") {
@@ -46,7 +47,7 @@ export default function ProtectedRoute({ children }: any) {
         router.push("/Login");
       }
     }
-  }, [loading, router.pathname]);
+  }, [loading, router.pathname, router.isReady]);
 
   return <>{loginStatus ? children : null}</>;
 }
