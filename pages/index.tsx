@@ -111,7 +111,7 @@ const Home: NextPage = () => {
           <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 max-w-screen-xl mt-16 ">
             <div className="flex flex-col rounded-md shadow-md">
               <div className="p-6 flex flex-col items-center">
-                <img src="" alt="" />
+                <img src="./img/best.jpg" alt="" />
                 <h3 className="mt-5 mb-2 text-midnight font-semibold text-lg">
                   <a href="">Learn from the best</a>
                 </h3>
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
             </div>
             <div className="flex flex-col rounded-md shadow-md">
               <div className="p-6 flex flex-col items-center">
-                <img src="" alt="" />
+                <img src="./img/score.jpg" alt="" />
                 <h3 className="mt-5 mb-2 text-midnight font-semibold text-lg">
                   <a href="">Detailed score Analysis</a>
                 </h3>
@@ -127,7 +127,7 @@ const Home: NextPage = () => {
             </div>
             <div className="flex flex-col rounded-md shadow-md">
               <div className="p-6 flex flex-col items-center">
-                <img src="" alt="" />
+                <img src="./img/study_mat.avif" alt="" />
                 <h3 className="mt-5 mb-2 text-midnight font-semibold text-lg">
                   <a href="">Complete study material</a>
                 </h3>
