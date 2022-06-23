@@ -22,7 +22,7 @@ async function fetchData() {
   console.log(data);
 }
 const Home: NextPage = () => {
-  fetchData();
+  // fetchData();
   let { loginStatus, serverURL } = useContext(AuthContext);
   const router = useRouter();
   const handleLogout = async () => {
