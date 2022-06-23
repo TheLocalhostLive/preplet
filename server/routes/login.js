@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const { loginValidation } = require("../loginValidation");
 
 const dotenv = require("dotenv");
+const user = require("../models/user");
 
 dotenv.config();
 
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
       if (!validPassword)
         return res
           .status(400)
-          .json({ message: "Nalla hain kya ?... Wrong Password", error: true });
+          .json({ message: "Wrong Password", error: true });
     } catch (err) {
       res.status(400).json({ message: "Please continue with google" });
       console.log(err.message);
@@ -68,7 +69,7 @@ router.post("/", async (req, res) => {
         expires: dayjs().add(30, "days").toDate(),
       })
       .json({
-        message: "Reh Bhai Bhai ! Logged in",
+        message: user.name+"Well Done ! You are ready to go",
         error: false,
         isAdmin: validUser.admin,
       });
@@ -114,7 +115,7 @@ router.post("/authtokenFromGoogleId/", async (req, res) => {
         expires: dayjs().add(30, "days").toDate(),
       })
       .json({
-        message: "Reh Bhai Bhai ! Logged in",
+        message: user.name + "Well Done ! You are ready to go",
         error: false,
         isAdmin: user.admin,
       });

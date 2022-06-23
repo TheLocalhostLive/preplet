@@ -60,7 +60,7 @@ const Slideshow = () => {
   );
 };
 const Home: NextPage = () => {
-  //fetchData();
+
   let { loginStatus, serverURL } = useContext(AuthContext);
   const router = useRouter();
   //return Slideshow();

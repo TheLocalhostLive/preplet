@@ -77,6 +77,8 @@ app.use('/previousyearquestions', previousYearRouter)
 const chapterWiseRouter = require('./routes/chapterWiseQues')
 app.use('/chapterwisequestions', chapterWiseRouter)
 
+const editAndDeleteQues = require('./routes/question')
+app.use('/question',editAndDeleteQues)
 
 app.listen(PORT, () => {
   console.log(`Server is Running ${PORT}`);
