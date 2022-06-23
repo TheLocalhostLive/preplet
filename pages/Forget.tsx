@@ -79,7 +79,9 @@ const Forget = () => {
       <>
         <div className=" bg-[url('/img/Forget_BG.jpg')] bg-no-repeat bg-[length:100%_100%] h-screen sm:h-screen flex justify-center items-center md:flex">
           <div className=" mx-2 bg-white my-4 flex flex-col md:flex-row items-center max-w-screen-lg overflow-hidden rounded-3xl shadow-lg w-full md:flex drop-shadow-2xl cursor-pointer">
-            <div className="flex"><img src="img/B.jpg" className="w-[100%] h-[100%]" /></div>
+            <div className="flex">
+              <img src="img/B.jpg" className="w-[100%] h-[100%]" />
+            </div>
             <div className="flex bg-white">
               <ToastContainer />
               <div>
@@ -87,33 +89,35 @@ const Forget = () => {
                   <div>
                     {/* welcome */}
                     <div>
-                      <p className="font-mono text-2xl text-center font-bold text-blue-600 align-top scale-125">Recover Password</p>
-                      <p className="align-top text-center pt-6 scale-60">Provide Account Details</p>
+                      <p className="font-mono text-2xl text-center font-bold text-blue-600 align-top scale-125">
+                        Recover Password
+                      </p>
+                      <p className="align-top text-center pt-6 scale-60">
+                        Provide Account Details
+                      </p>
                     </div>
                     {/* Form */}
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <div className="text-center pt-4">
-                        <input className="pl-4 border-2"
+                        <input
+                          className="pl-4 border-2"
                           placeholder="Email"
                           type="text"
                           {...register("email", { required: true })}
                         />
                         {errors.email && errors.email.type == "required" && (
-                          <div className="text-red-600 ">please enter your email id</div>
+                          <div className="text-red-600 ">
+                            please enter your email id
+                          </div>
                         )}
                       </div>
                       <div className="pt-4 pl-7">
                         <div className="text-white bg-blue-400 w-40 h-10 justify-center items-center pt-2">
                           {" "}
                           <Link href="/Forget_Code">
-                          <button className="w-full">PROCEED</button>
+                            <button className="w-full">PROCEED</button>
                           </Link>
                         </div>
-                      </div>
-                      <div className="pt-4">
-                        <Link href="/Change_Password">
-                        <button className="w-full underline underline-offset-1">Change Password</button>
-                        </Link>
                       </div>
                     </form>
                   </div>
@@ -128,6 +132,3 @@ const Forget = () => {
 };
 
 export default Forget;
-
-
-
