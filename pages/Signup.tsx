@@ -6,6 +6,7 @@ import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import ToggleInputType from "../components/ToggleInputType";
+import { AiFillHome } from "react-icons/ai";
 
 interface FormData {
   name: string;
@@ -81,12 +82,19 @@ const Signup = () => {
   if (!loginStatus) {
     return (
       <>
-        <div className=" bg-[url('/img/Signup_BG.jpg')] bg-no-repeat bg-[length:100%_100%] h-full sm:h-screen flex justify-center items-center md:flex">
-          <div className=" mx-2 bg-white my-4 flex flex-col md:flex-row items-center max-w-screen-lg overflow-hidden rounded-3xl shadow-lg w-full md:flex drop-shadow-2xl cursor-pointer">
-            <div className="flex">
-              <img src="img/B.jpg" className="w-[100%] h-[100%]" />
+        <img src="./img/pic.jpg" height="40px" width="90px" />
+        {/* <div className=" bg-[url('/img/Signup_BG.jpg')] bg-no-repeat bg-[length:100%_100%] h-full sm:h-screen flex justify-center items-center md:flex"> */}
+        <div className="h-full sm:h-screen flex flex-col justify-center items-center md:flex font-sans">
+          <Link href="/">
+            <span className="flex cursor-pointer items-baseline">
+              <AiFillHome /> Home
+            </span>
+          </Link>
+          <div className=" mx-2 bg-white my-4 flex flex-col md:flex-row items-center max-w-screen-lg overflow-hidden rounded-3xl shadow-lg w-[80%] h-[60%] md:flex drop-shadow-2xl cursor-pointer">
+            <div className="flex flex-1 justify-center">
+              <img src="pictures/login_bg.png" className="w-[50%]" />
             </div>
-            <div className="flex bg-white">
+            <div className="flex flex-1 justify-center bg-white">
               <ToastContainer />
               <div>
                 <div></div>
@@ -110,7 +118,7 @@ const Signup = () => {
                         {...register("name", { required: true })}
                       />
                       {errors.name && errors.name.type == "required" && (
-                        <div className="text-red-600 ">
+                        <div className="text-red-600 capitalize">
                           please enter your name
                         </div>
                       )}
@@ -123,7 +131,7 @@ const Signup = () => {
                         {...register("email", { required: true })}
                       />
                       {errors.email && errors.email.type == "required" && (
-                        <div className="text-red-600 ">
+                        <div className="text-red-600 capitalize">
                           please enter your email id
                         </div>
                       )}
@@ -145,13 +153,13 @@ const Signup = () => {
                   /> */}
                       {errors.password &&
                         errors.password.type === "required" && (
-                          <p className="text-red-600 ">
+                          <p className="text-red-600 capitalize">
                             please enter your password
                           </p>
                         )}
                       {errors.password &&
                         errors.password.type === "minLength" && (
-                          <p className="text-red-600 ">
+                          <p className="text-red-600 capitalize">
                             please enter atleast 5 characters
                           </p>
                         )}
@@ -180,13 +188,13 @@ const Signup = () => {
 
                       {errors.cpassword &&
                         errors.cpassword.type === "required" && (
-                          <div className="text-red-600 ">
+                          <div className="text-red-600 capitalize">
                             please confirm your password
                           </div>
                         )}
                       {errors.cpassword &&
                         errors.cpassword.type === "validate" && (
-                          <div className="text-red-600 ">
+                          <div className="text-red-600 capitalize">
                             {errors.cpassword.message}
                           </div>
                         )}
