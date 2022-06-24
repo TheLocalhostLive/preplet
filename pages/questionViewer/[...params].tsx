@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import SearchBox from "../../components/SearchBox";
 import QnaCard from "../../components/QnaCard";
 import MenuBar from "../../components/MenuBar";
@@ -6,6 +6,7 @@ import { MdAddCircle } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AuthContext } from "../../context/AuthContext";
 import JELETQnaAdder from "../../components/JELETQnaAdder";
+import { ToastContainer, toast } from "react-toastify";
 
 import { useEffect, useState, useContext } from "react";
 
@@ -20,7 +21,16 @@ interface RequestPayload {
   subject: string;
   param: number | string;
 }
-
+interface Qna {
+  _id: any;
+  question: any;
+  solution: any;
+}
+const defaultQnaValue = {
+  _id: "",
+  question: "",
+  solution: "",
+};
 const QuestionViewer = ({
   qna,
   subject,
@@ -30,11 +40,51 @@ const QuestionViewer = ({
 }: QuestionProps) => {
   // console.log(qna);
   // return <></>;
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin, serverURL } = useContext(AuthContext);
+  async function handleDeleteQuestion(e: any) {
+    const [btn, id] = e.target.id.split("-");
+    try {
+      const res = await toast.promise(
+        fetch(serverURL + "/question/" + subjectCode + "/delete", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ id: id }),
+        }),
+        {
+          pending: "Please wait!",
+          error: "Please Retry",
+          success: "Successfully deleted",
+        }
+      );
+      location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const [qnaToBeEdited, setQnaToBeEdited] = useState(defaultQnaValue);
+  async function handleEditQuestion(e: any) {
+    const [btn, id] = e.target.id.split("-");
+    const target = qna.filter((q: any) => q._id === id);
+    console.log(target);
+    setQnaToBeEdited({
+      question: target[0].question,
+      solution: target[0].solution,
+      _id: target[0]._id,
+    });
+    setEditQna(true);
+  }
+  function hideEditQna() {
+    setEditQna(false);
+    location.reload();
+  }
   // const isAdmin = true;
   const [showStickySubjectName, setShowStickySubjectName] = useState(false);
   const [showQnaAdder, setShowQnaAdder] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [editQna, setEditQna] = useState(false);
+
   const scrollListener = () => {
     if (window.scrollY >= 96 && !showStickySubjectName) {
       setShowStickySubjectName(true);
@@ -49,6 +99,7 @@ const QuestionViewer = ({
 
   const hideQnaAdder = () => {
     setShowQnaAdder(false);
+    location.reload();
   };
 
   function getChapterName(chapter: string) {
@@ -56,6 +107,7 @@ const QuestionViewer = ({
   }
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     window.addEventListener("scroll", scrollListener);
     return () => {
       window.removeEventListener("scroll", scrollListener);
@@ -64,6 +116,7 @@ const QuestionViewer = ({
 
   return (
     <div className="flex relative">
+      <ToastContainer />
       <MenuBar className={`${isMenuOpen ? "" : "hidden "} sm:flex`} />
       <div className="flex flex-col w-full">
         {/* heading */}
@@ -110,11 +163,14 @@ const QuestionViewer = ({
           {qna.length <= 0 ? <div>No Data Found!</div> : null}
           {qna.map((data: any) => (
             <QnaCard
+              id={data._id}
               key={data._id}
               question={data.question}
               solution={data.solution}
               chapter={data.chapter}
               year={data.isPreviousYearQuestion ? data.year : null}
+              handleDeleteQuestion={handleDeleteQuestion}
+              handleEditQuestion={handleEditQuestion}
             />
           ))}
         </div>
@@ -131,6 +187,15 @@ const QuestionViewer = ({
           uploadURL={`http://localhost:3005/question/${subjectCode}`}
           onDelete={hideQnaAdder}
           chapter={chapter}
+        />
+      )}
+      {isAdmin && editQna && (
+        <JELETQnaAdder
+          uploadURL={`http://localhost:3005/question/${subjectCode}`}
+          onDelete={hideEditQna}
+          chapter={chapter}
+          initQuestions={qnaToBeEdited.question}
+          initSolution={qnaToBeEdited.solution}
         />
       )}
     </div>

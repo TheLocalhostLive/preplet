@@ -5,12 +5,18 @@ import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { ToastContainer, toast } from "react-toastify";
 
-export default function JeletQnaAdder({ onDelete, uploadURL, chapter }: any) {
+export default function JeletQnaAdder({
+  onDelete,
+  uploadURL,
+  chapter,
+  initQuestions,
+  initSolution,
+}: any) {
   const [question, setQuestion] = useState(EditorState.createEmpty());
   const [solution, setSolution] = useState(EditorState.createEmpty());
   const [year, setYear] = useState(null);
   const [isPreviousYearQuestion, setPreviousYear] = useState(false);
-
+  //setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(<p>my text</p>))));
   const saveQuestionToDB = async () => {
     const htmlQuestion = draftToHtml(
       convertToRaw(question.getCurrentContent())

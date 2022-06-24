@@ -8,12 +8,18 @@ interface QnaProps {
   solution: string;
   chapter: string;
   year: number | null;
+  id: string;
+  handleDeleteQuestion: any;
+  handleEditQuestion: any;
 }
 export default function QnaCard({
   question,
   solution,
   chapter,
   year,
+  id,
+  handleDeleteQuestion,
+  handleEditQuestion,
 }: QnaProps) {
   const [displayToolMenu, setDisplayToolMenu] = useState(false);
   const { isAdmin } = useContext(AuthContext);
@@ -75,11 +81,19 @@ export default function QnaCard({
         )}
         {displayToolMenu && (
           <div className="z-[100] rounded bg-white absolute flex flex-col top-[80%] sm:left-[78.3%] left-[75%] text-[14px] border border-black-bg">
-            <span className="hover:bg-[#cad2de]  transition-colors w-16 border-b-black-bg border cursor-pointer">
+            <span
+              id={"edit-" + id}
+              onClick={handleEditQuestion}
+              className="hover:bg-[#cad2de]  transition-colors w-16 border-b-black-bg border cursor-pointer"
+            >
               Edit
             </span>
 
-            <span className=" border-b-black-bg border hover:bg-[#7A0012] hover:text-[#fff] cursor-pointer transition-colors w-16">
+            <span
+              onClick={handleDeleteQuestion}
+              id={"delete-" + id}
+              className=" border-b-black-bg border hover:bg-[#7A0012] hover:text-[#fff] cursor-pointer transition-colors w-16"
+            >
               Delete
             </span>
             <span

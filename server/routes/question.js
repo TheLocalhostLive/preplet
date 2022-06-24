@@ -8,7 +8,7 @@ const physQuesUp = require("../models/jeletPhysQues");
 router.post("/chem/edit/", async (req, res) => {
   try {
     const editQues = await chemQuesUp.findOne({
-      _id: req.body.id
+      _id: req.body.id,
     });
     console.log(editQues);
     editQues.question = req.body.question;
@@ -24,7 +24,7 @@ router.post("/chem/edit/", async (req, res) => {
     res.json(q1);
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Failed to Update" ,error : true});
+    res.status(400).json({ message: "Failed to Update", error: true });
   }
 });
 
@@ -94,7 +94,8 @@ router.post("/feee/edit", async (req, res) => {
 
 //-------------------- Delete Question ---------------//
 
-router.get("/chem/delete", async (req, res) => {
+router.post("/chem/delete", async (req, res) => {
+  console.log(req.body.id);
   try {
     const editQues = await chemQuesUp.findOne({
       _id: req.body.id,
@@ -107,7 +108,7 @@ router.get("/chem/delete", async (req, res) => {
   }
 });
 
-router.get("/math/delete", async (req, res) => {
+router.post("/math/delete", async (req, res) => {
   try {
     const editQues = await mathQuesUp.findOne({
       _id: req.body.id,
@@ -119,7 +120,7 @@ router.get("/math/delete", async (req, res) => {
     res.status(400).json({ message: "Unable to Delete", error: true });
   }
 });
-router.get("/phys/delete", async (req, res) => {
+router.post("/phys/delete", async (req, res) => {
   try {
     const editQues = await physQuesUp.findOne({
       _id: req.body.id,
@@ -132,7 +133,7 @@ router.get("/phys/delete", async (req, res) => {
   }
 });
 
-router.get("/feee/delete", async (req, res) => {
+router.post("/feee/delete", async (req, res) => {
   try {
     const editQues = await feeeQuesUp.findOne({
       _id: req.body.id,
