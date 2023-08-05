@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import SearchBox from "../../components/SearchBox";
 import QnaCard from "../../components/QnaCard";
 import MenuBar from "../../components/MenuBar";
@@ -6,6 +6,7 @@ import { MdAddCircle } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AuthContext } from "../../context/AuthContext";
 import JELETQnaAdder from "../../components/JELETQnaAdder";
+import { ToastContainer, toast } from "react-toastify";
 
 import { useEffect, useState, useContext } from "react";
 
@@ -13,19 +14,76 @@ interface QuestionProps {
   qna: any;
   subject: string;
   subjectCode: string;
+  chapter: string;
+  year: string | number;
 }
 interface RequestPayload {
   subject: string;
   param: number | string;
 }
-
-const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
+interface Qna {
+  _id: any;
+  question: any;
+  solution: any;
+}
+const defaultQnaValue = {
+  _id: "",
+  question: "",
+  solution: "",
+};
+const QuestionViewer = ({
+  qna,
+  subject,
+  subjectCode,
+  chapter,
+  year,
+}: QuestionProps) => {
   // console.log(qna);
   // return <></>;
-  // const { isAdmin } = useContext(AuthContext);
-  const isAdmin = true;
+  const { isAdmin, serverURL } = useContext(AuthContext);
+  async function handleDeleteQuestion(e: any) {
+    const [btn, id] = e.target.id.split("-");
+    try {
+      const res = await toast.promise(
+        fetch(serverURL + "/question/" + subjectCode + "/delete", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ id: id }),
+        }),
+        {
+          pending: "Please wait!",
+          error: "Please Retry",
+          success: "Successfully deleted",
+        }
+      );
+      location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const [qnaToBeEdited, setQnaToBeEdited] = useState(defaultQnaValue);
+  async function handleEditQuestion(e: any) {
+    const [btn, id] = e.target.id.split("-");
+    const target = qna.filter((q: any) => q._id === id);
+    console.log(target);
+    setQnaToBeEdited({
+      question: target[0].question,
+      solution: target[0].solution,
+      _id: target[0]._id,
+    });
+    setEditQna(true);
+  }
+  function hideEditQna() {
+    setEditQna(false);
+    location.reload();
+  }
+  // const isAdmin = true;
   const [showStickySubjectName, setShowStickySubjectName] = useState(false);
   const [showQnaAdder, setShowQnaAdder] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [editQna, setEditQna] = useState(false);
 
   const scrollListener = () => {
     if (window.scrollY >= 96 && !showStickySubjectName) {
@@ -41,9 +99,15 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
 
   const hideQnaAdder = () => {
     setShowQnaAdder(false);
+    location.reload();
   };
 
+  function getChapterName(chapter: string) {
+    return chapter.split("_").join(" ");
+  }
+
   useEffect(() => {
+    if (typeof window === "undefined") return;
     window.addEventListener("scroll", scrollListener);
     return () => {
       window.removeEventListener("scroll", scrollListener);
@@ -52,12 +116,21 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
 
   return (
     <div className="flex relative">
-      <MenuBar className="hidden sm:flex" />
+      <ToastContainer />
+      <MenuBar className={`${isMenuOpen ? "" : "hidden "} sm:flex`} />
       <div className="flex flex-col w-full">
         {/* heading */}
         <div className="flex h-24 items-center px-5">
-          <AiOutlineMenu className="sm:hidden flex h-6 w-7 ml-1 mr-4" />
-          {<span className="font-beba text-5xl">{subject}</span>}
+          <AiOutlineMenu
+            onClick={() => setMenuOpen(!isMenuOpen)}
+            className="sm:hidden flex h-6 w-7 ml-1 mr-4"
+          />
+          {/*Menu icon*/}
+          {
+            <span className="font-beba capitalize text-3xl">
+              {subject}-{getChapterName(chapter)}
+            </span>
+          }
         </div>
 
         <div className="bg-[#EFEFEF] min-h-screen p-5 flex flex-col items-center rounded-tc">
@@ -72,7 +145,11 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
           >
             {showStickySubjectName ? (
               <div className="flex items-center md-3">
-                <AiOutlineMenu className="sm:hidden flex h-6 w-7 mx-5" />
+                {/*Menu icon*/}
+                <AiOutlineMenu
+                  onClick={() => setMenuOpen(!isMenuOpen)}
+                  className="sm:hidden flex h-6 w-7 mx-5"
+                />
                 <span className="font-beba text-3xl ">{subject}</span>
               </div>
             ) : (
@@ -86,11 +163,14 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
           {qna.length <= 0 ? <div>No Data Found!</div> : null}
           {qna.map((data: any) => (
             <QnaCard
+              id={data._id}
               key={data._id}
               question={data.question}
               solution={data.solution}
               chapter={data.chapter}
               year={data.isPreviousYearQuestion ? data.year : null}
+              handleDeleteQuestion={handleDeleteQuestion}
+              handleEditQuestion={handleEditQuestion}
             />
           ))}
         </div>
@@ -106,6 +186,16 @@ const QuestionViewer = ({ qna, subject, subjectCode }: QuestionProps) => {
         <JELETQnaAdder
           uploadURL={`http://localhost:3005/question/${subjectCode}`}
           onDelete={hideQnaAdder}
+          chapter={chapter}
+        />
+      )}
+      {isAdmin && editQna && (
+        <JELETQnaAdder
+          uploadURL={`http://localhost:3005/question/${subjectCode}`}
+          onDelete={hideEditQna}
+          chapter={chapter}
+          initQuestions={qnaToBeEdited.question}
+          initSolution={qnaToBeEdited.solution}
         />
       )}
     </div>
@@ -143,12 +233,12 @@ export async function getServerSideProps(context: any) {
     chem: "Chemistry",
     phys: "Physics",
     feee: "FEEE",
-    maths: "Maths",
+    math: "Maths",
   };
 
   let subject = "",
     chapter = "",
-    year: number,
+    year = null,
     endPoint = "";
   let questions = null,
     payload = null;
@@ -178,6 +268,8 @@ export async function getServerSideProps(context: any) {
       props: {
         qna: [],
         subject: "invalid!",
+        chapter: null,
+        year: null,
       },
     };
   }
@@ -188,6 +280,8 @@ export async function getServerSideProps(context: any) {
       qna: questions,
       subject: subjectCodes[subject as keyof typeof subjectCodes],
       subjectCode: subject,
+      chapter,
+      year,
     },
   };
 }
