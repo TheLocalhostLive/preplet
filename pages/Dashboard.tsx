@@ -48,7 +48,7 @@ const Slideshow = () => {
     <div className="slide-container w-[600px] h-[300px]">
       <Slide autoplay duration={1500}>
         {slideImages.map((slideImage, index) => (
-          <Link href={slideImage.href}>
+          <Link key={slideImage.href} href={slideImage.href}>
             <div className="each-slide" key={index}>
               <img src={slideImage.url} className="h-[200px] w-[200px]" />
               <span>{slideImage.caption}</span>
@@ -60,7 +60,6 @@ const Slideshow = () => {
   );
 };
 const Home: NextPage = () => {
-
   let { loginStatus, serverURL } = useContext(AuthContext);
   const router = useRouter();
   //return Slideshow();

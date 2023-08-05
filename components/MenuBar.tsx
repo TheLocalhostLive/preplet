@@ -14,7 +14,7 @@ interface MenuProps {
   className: string;
 }
 function getChapterId(chapter: string) {
-  const result = Array.from(chapter).map(char => {
+  const result = Array.from(chapter).map((char) => {
     if (char === " ") return "_";
     if (char.match(/\w/) || char.match(/\d/)) return char.toLowerCase();
     return "";
@@ -122,7 +122,7 @@ export default function MenuBar({ className }: MenuProps) {
                 <ul
                   className={"ml-2 " + (isPhysicsSubjectOpen ? "" : "hidden")}
                 >
-                  {physicsChapters.map(chapter => (
+                  {physicsChapters.map((chapter) => (
                     <Link
                       href={
                         chapterWiseBaseURL + "/phys/" + getChapterId(chapter)
@@ -150,7 +150,7 @@ export default function MenuBar({ className }: MenuProps) {
                   />
                 </span>
                 <ul className={"ml-2 " + (isChemSubjectOpen ? "" : "hidden")}>
-                  {chemChapters.map(chapter => (
+                  {chemChapters.map((chapter) => (
                     <Link
                       href={
                         chapterWiseBaseURL + "/chem/" + getChapterId(chapter)
@@ -178,7 +178,7 @@ export default function MenuBar({ className }: MenuProps) {
                   />
                 </span>
                 <ul className={"ml-2 " + (isMathSubjectOpen ? "" : "hidden")}>
-                  {mathChapters.map(chapter => (
+                  {mathChapters.map((chapter) => (
                     <Link
                       href={
                         chapterWiseBaseURL + "/math/" + getChapterId(chapter)
@@ -209,7 +209,7 @@ export default function MenuBar({ className }: MenuProps) {
                   />
                 </span>
                 <ul className={"ml-2 " + (isFEEESubjectOpen ? "" : "hidden")}>
-                  {feeeChapters.map(chapter => (
+                  {feeeChapters.map((chapter) => (
                     <Link
                       href={
                         chapterWiseBaseURL + "/feee/" + getChapterId(chapter)
@@ -236,9 +236,9 @@ export default function MenuBar({ className }: MenuProps) {
               />
             </span>
             <ul className={"ml-2 " + (isPrevYearOpen ? "" : "hidden")}>
-              {years.map((year: any) => {
+              {years.map((year: any, index: number) => {
                 return (
-                  <li>
+                  <li key={`${year}-${index}`}>
                     <span
                       id={year.value}
                       onClick={toggleYearVisibility}

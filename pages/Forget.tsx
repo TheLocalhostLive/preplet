@@ -52,7 +52,14 @@ const Forget = () => {
     let result;
     try {
       const response = await toast.promise(
-        fetch(`${serverURL}/login`, request),
+        fetch(`${serverURL}/login`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }),
         {
           pending: "Please wait!",
           error: "Please Retry",

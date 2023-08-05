@@ -11,6 +11,7 @@ interface QnaProps {
   id: string;
   handleDeleteQuestion: any;
   handleEditQuestion: any;
+  key: any;
 }
 export default function QnaCard({
   question,
@@ -20,6 +21,7 @@ export default function QnaCard({
   id,
   handleDeleteQuestion,
   handleEditQuestion,
+  key,
 }: QnaProps) {
   const [displayToolMenu, setDisplayToolMenu] = useState(false);
   const { isAdmin } = useContext(AuthContext);
