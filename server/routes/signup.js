@@ -73,29 +73,16 @@ router.post("/", async (req, res) => {
     // Sending Activation Link to user's Gmail
 
     //------------------//-- Below Codes Are for Google Outh2 Mail --//--------------------//
-    const oAuth2Client = new google.auth.OAuth2(
-      process.env.CLIENT_ID,
-      process.env.CLIENT_SECRET,
-      process.env.GMAIL_REFRESH_TOKEN
-    );
-    oAuth2Client.setCredentials({
-      refresh_token: process.env.GMAIL_REFRESH_TOKEN,
+    const auth = new google.auth.GoogleAuth({
+      keyFile: '../preplet-434413-4810fefeb1cc.json',
+      scopes: ['https://www.googleapis.com/auth/gmail.send'], // Add other scopes as needed
     });
-
     async function sendMail() {
       try {
-        const accessToken = await oAuth2Client.getAccessToken();
+        
         let transporter = nodemailer.createTransport({
           service: "gmail",
-          auth: {
-            type: "OAUTH2",
-            user: "tonmaysardar500@gmail.com",
-            pass: process.env.AUTH_PASSWORD,
-            clientId: process.env.CLIENT_ID,
-            clientSecret: process.env.CLIENT_SECRET,
-            refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-            accessToken: accessToken,
-          },
+          auth,
           tls: {
             rejectUnauthorized: false,
           },

@@ -3,26 +3,20 @@ const fs = require("fs");
 const { google } = require("googleapis");
 require("dotenv").config();
 
-const client_id = process.env.G_DRIVE_CLIENT_ID;
-const client_secret = process.env.G_DRIVE_SECRET;
-const redirect_uri = "https://developers.google.com/oauthplayground";
-const refresh_token = process.env.G_DRIVE_REFRESH_TOKEN;
 
-const oauth2Client = new google.auth.OAuth2(
-  client_id,
-  client_secret,
-  redirect_uri
-);
-oauth2Client.setCredentials({
-  refresh_token: refresh_token,
+
+const auth = new google.auth.GoogleAuth({
+  keyFile: '../preplet-434413-4810fefeb1cc.json',
+  scopes: ['https://www.googleapis.com/auth/drive'], // Add other scopes as needed
 });
+
 async function uploadFiles() {
   try {
     console.log("googing");
 
     const driveService = google.drive({
       version: "v3",
-      auth: oauth2Client,
+      auth,
     });
     const fileMetaData = {
       name: "spaceman.jpg",
