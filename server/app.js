@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const passport = require("passport");
 const fileUpload = require("express-fileupload");
 const { Readable } = require("stream");
+const session = require('express-session');
 
 dotenv.config();
 const cors = require("cors");
@@ -21,6 +22,15 @@ app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, 
+    resave: false, 
+    saveUninitialized: false, 
+    cookie: { secure: false } 
+  })
+);
 
 let PORT = process.env.PORT || 3005;
 
