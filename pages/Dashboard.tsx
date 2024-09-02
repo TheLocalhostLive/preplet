@@ -21,7 +21,7 @@ import "react-slideshow-image/dist/styles.css";
 import Link from "next/link";
 
 async function fetchData() {
-  const result = await fetch("http://localhost:3000/menu.yaml");
+  const result = await fetch("http://localhost:3001/menu.yaml");
   const data = await result.json();
   console.log(data);
 }

@@ -68,7 +68,7 @@ router.post('/',async(req,res)=>{
             subject: "Reset Your Password",
             html: `<h1> Girl Friend ka number toh nhi Bhulta ! </h1>
                     <h2> Here's the Password reset link </h2>
-                    <a href = "http://localhost:3000/reset-password?token=${onetime_key}">Reset Password</a>
+                    <a href = "http://localhost:3001/reset-password?token=${onetime_key}">Reset Password</a>
                     `
         }
         // Sending Mail 

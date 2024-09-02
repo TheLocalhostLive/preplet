@@ -16,7 +16,7 @@ router.get(
       googleId: req.user.googleId,
     };
     const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-    res.redirect("http://localhost:3000/Dashboard/?token=" + token);
+    res.redirect("http://localhost:3001/Dashboard/?token=" + token);
     // res
     //   .cookie("auth-token", token)
     //   .json({ message: "Reh Bhai Bhai ! Logged in", isAdmin: req.user.admin });
