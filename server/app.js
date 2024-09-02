@@ -9,7 +9,7 @@ const { Readable } = require("stream");
 
 dotenv.config();
 const cors = require("cors");
-app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:3001"], credentials: true }));
 
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true });
 const connect = mongoose.connection;
