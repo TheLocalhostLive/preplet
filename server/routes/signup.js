@@ -9,6 +9,9 @@ const { registerValidation } = require("../registrationValidation");
 // const { TLSSocket } = require('tls');
 const jwt = require("jsonwebtoken");
 
+const send_email = require("../utils/send_email");
+const verifyEmailTemplate = require("../templates/verify_email");
+
 require("dotenv").config();
 
 router.get("/register", (req, res) => {
@@ -64,47 +67,12 @@ router.post("/", async (req, res) => {
     const onetime_key = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "15m",
     });
-
-    // Sending Activation Link to user's Gmail
-
-    //------------------//-- Below Codes Are for Google Outh2 Mail --//--------------------//
-    const auth = new google.auth.GoogleAuth({
-      keyFile: '../preplet-434413-4810fefeb1cc.json',
-      scopes: ['https://www.googleapis.com/auth/gmail.send'], // Add other scopes as needed
-    });
-    async function sendMail() {
-      try {
-        
-        let transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth,
-          tls: {
-            rejectUnauthorized: false,
-          },
-        });
-
-        let mailingDetails = {
-          from: '"Team PrepLet"<tonmaysardar500@gmail.com>',
-          to: savedUser.email,
-          subject: "Verify your email",
-          html: `<h1> Raha nhi jata ... Tadap hi Aisi hain! </h1>
-                        <h2> Verify Your Email First </h2> 
-                     <a href = "http://localhost:3005/verify-email?token=${onetime_key}"> Click to verify</a>
-                        `,
-        };
-
-        let Sending = await transporter.sendMail(mailingDetails);
-        return Sending;
-      } catch (error) {
-        console.log("Khatam Tata Bye bye");
-        console.log(error);
-      }
-    }
-    sendMail()
-      .then((Sending) => console.log("Email Has been sent..", Sending))
-      .catch((error) => console.log(error));
+    const link = `http://localhost:3005/verify-email?token=${onetime_key}`;
+    const emailHtml = verifyEmailTemplate(user.name, link);
+    await send_email(user.email, 'Verify Your Email Account', emailHtml);
 
     res.json({ message: "Check Your email and Verify", error: false });
+
   } catch (error) {
     console.log(error);
     res.status(404).send(error);
