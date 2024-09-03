@@ -2,9 +2,6 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const User = require("../models/user");
-// const checkSpecialChar = require("../utils/customValidation");
-// const checkNumeric = require("../utils/customValidation");
-// const checkAsterisk = require("../utils/customValidation");
 const UserToken = require("../models/otp");
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
@@ -13,8 +10,6 @@ const { registerValidation } = require("../registrationValidation");
 const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
-// var transporter = nodemailer.createTransport(
-//   'smtps://team%40@engineersway.in:dasrshan09@smtp.');
 
 router.get("/register", (req, res) => {
   res.send("Sign up to continue");
@@ -117,23 +112,3 @@ router.post("/", async (req, res) => {
 });
 module.exports = router;
 
-// let mailingDetails = {
-//   from: '"Team Xlet"<team@engineersway.in>',
-//   to: user.email,
-//   subject: "Verify your email",
-//   html: `<h1> Raha nhi jata ... Tadap hi Aisi hain! </h1>
-//                 <h2> Verify Your Email First </h2>
-//              <a href = "http://localhost:3005/verify-email?token=${onetime_key}"> Click to verify</a>
-//                 `
-// };
-// console.log("Keep Going");
-// // Sending Mail
-// transporter.sendMail(mailingDetails, function (error, info) {
-//   if (error) {
-//     console.log("In the If");
-//     console.log(error);
-//   } else {
-//     console.log("Mail has been sent to email account");
-//   }
-// });
-// console.log("still Going");
