@@ -10,7 +10,7 @@ const session = require('express-session');
 
 dotenv.config();
 const cors = require("cors");
-app.use(cors({ origin: ["http://localhost:3001"], credentials: true }));
+app.use(cors({ origin: [`${process.env.FRONT_END_URL}`], credentials: true }));
 
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true });
 const connect = mongoose.connection;

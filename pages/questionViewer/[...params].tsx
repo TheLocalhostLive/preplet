@@ -184,14 +184,14 @@ const QuestionViewer = ({
       )}
       {isAdmin && showQnaAdder && (
         <JELETQnaAdder
-          uploadURL={`http://localhost:3005/question/${subjectCode}`}
+          uploadURL={`${process.env.NEXT_PUBLIC_SERVER_URL}/question/${subjectCode}`}
           onDelete={hideQnaAdder}
           chapter={chapter}
         />
       )}
       {isAdmin && editQna && (
         <JELETQnaAdder
-          uploadURL={`http://localhost:3005/question/${subjectCode}`}
+          uploadURL={`${process.env.NEXT_PUBLIC_SERVER_URL}/question/${subjectCode}`}
           onDelete={hideEditQna}
           chapter={chapter}
           initQuestions={qnaToBeEdited.question}
@@ -244,7 +244,7 @@ export async function getServerSideProps(context: any) {
     payload = null;
   subject = context.query.params[1];
 
-  const serverURL = "http://localhost:3005/";
+  const serverURL = `${process.env.NEXT_PUBLIC_SERVER_URL}/`;
   if (context.query.params[0] === "chapter_wise") {
     chapter = context.query.params[2];
     endPoint = "chapterwisequestions/" + subject;

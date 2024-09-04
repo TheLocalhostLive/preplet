@@ -72,7 +72,7 @@ export default function MenuBar({ className }: MenuProps) {
       </div>
       {/* name and image */}
       <div className="flex items-center">
-        <img src="http://localhost:3001/avtar.webp" className="h-20" />
+        <img src={`/avtar.webp`} className="h-20" />
         <span>Joydeep Bhattacharjee</span>
         <button
           className="m-2 flex items-center justify-between text-xs text-red-600"
