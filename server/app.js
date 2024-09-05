@@ -10,7 +10,16 @@ const session = require('express-session');
 
 dotenv.config();
 const cors = require("cors");
-app.use(cors({ origin: [`${process.env.FRONT_END_URL}`], credentials: true }));
+
+const allowedOrigins = [
+  "http://localhost:3000/",
+  "http://localhost:3001/",
+  "http://localhost:5000/",
+  "http://preplet.thelocalhost.live",
+  "https://preplet.thelocalhost.live"
+];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true });
 const connect = mongoose.connection;
