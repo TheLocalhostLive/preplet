@@ -67,7 +67,7 @@ router.post("/", async (req, res) => {
     const onetime_key = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "15m",
     });
-    const link = `${process.env.FRONT_END_URL}/verify-email?token=${onetime_key}`;
+    const link = `${process.env.SERVER_URL}/verify-email?token=${onetime_key}`;
     const emailHtml = verifyEmailTemplate(user.name, link);
     await send_email(user.email, 'Verify Your Email Account', emailHtml);
 
